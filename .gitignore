@@ -9,3 +9,7 @@
 !vendor/
 !vendor/react.js
 !vendor/react-dom.js
+!Property.dc.html
+!Property.bn.html
+!listings.js
+!styles.css
