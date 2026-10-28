@@ -1,0 +1,1087 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grihova — Find a place that feels right</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Noto+Sans+Bengali:wght@500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7F8F5}
+a{color:#1D6B52}a:hover{color:#123D32}
+.g-root{font-family:'Manrope',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#19231F;background:#F7F8F5;-webkit-font-smoothing:antialiased;line-height:1.5}
+.g-root *{box-sizing:border-box}
+.bn{font-family:'Noto Sans Bengali','Manrope',sans-serif}
+.wrap{max-width:1240px;margin:0 auto;padding-left:32px;padding-right:32px}
+.glass{background:rgba(255,255,255,.78);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.65);box-shadow:0 12px 36px rgba(22,45,33,.08)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glass{background:rgba(255,255,255,.97)}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 20px;border-radius:8px;font-family:inherit;font-size:15px;font-weight:700;line-height:1;text-decoration:none;cursor:pointer;transition:background-color .2s,border-color .2s,box-shadow .2s,color .2s;white-space:nowrap}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:#1D6B52;color:#FFFFFF;border:1px solid #1D6B52}
+.btn-primary:hover{background:#123D32;border-color:#123D32;color:#FFFFFF;box-shadow:0 6px 18px rgba(18,61,50,.18)}
+.btn-ghost{background:transparent;color:#19231F;border:1px solid #CFD9D2}
+.btn-ghost:hover{background:#FFFFFF;color:#19231F;border-color:#B5C4BA}
+.btn-light{background:#FFFFFF;color:#123D32;border:1px solid #FFFFFF}
+.btn-light:hover{background:#E8F0EA;color:#123D32}
+.btn-line-light{background:transparent;color:#FFFFFF;border:1px solid rgba(255,255,255,.4)}
+.btn-line-light:hover{background:rgba(255,255,255,.08);color:#FFFFFF}
+.arr{transition:transform .2s ease}
+.btn:hover .arr,.tlink:hover .arr,.row-link:hover .arr{transform:translateX(3px)}
+.g-root :focus-visible{outline:2px solid #1D6B52;outline-offset:2px}
+.kicker{display:flex;align-items:center;gap:10px;margin:0;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#1D6B52}
+.kicker::before{content:"";width:24px;height:1px;background:#C6A66B}
+.h2{margin:0;font-size:36px;line-height:1.12;font-weight:800;letter-spacing:-.028em;color:#19231F;text-wrap:balance}
+.lead{margin:0;font-size:17px;line-height:1.6;color:#5D6A63;text-wrap:pretty}
+.navlink{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border-radius:8px;font-size:15px;font-weight:600;color:#33403A;text-decoration:none;transition:background-color .2s,color .2s}
+.navlink:hover{background:rgba(29,107,82,.07);color:#123D32}
+.iconbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;min-width:44px;padding:0 12px;border-radius:8px;border:0;background:transparent;font-family:inherit;font-size:15px;font-weight:600;color:#33403A;cursor:pointer;text-decoration:none}
+.iconbtn:hover{background:rgba(29,107,82,.07);color:#123D32}
+.burger{display:none}
+.site-header{background:rgba(247,248,245,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid transparent}
+@supports (animation-timeline: scroll()){
+.site-header{animation:headsolid linear both;animation-timeline:scroll();animation-range:0 160px}
+@keyframes headsolid{from{background:rgba(247,248,245,.55);border-bottom-color:transparent}to{background:rgba(247,248,245,.94);border-bottom-color:#E3E9E4}}
+}
+.lbl{display:block;margin:0 0 6px;font-size:13px;font-weight:700;color:#33403A}
+.input{width:100%;height:48px;padding:0 14px;border:1px solid #D5DED8;border-radius:8px;background:#FFFFFF;font-family:inherit;font-size:15px;color:#19231F;transition:border-color .2s,box-shadow .2s}
+.input:hover{border-color:#B5C4BA}
+.input:focus{outline:none;border-color:#1D6B52;box-shadow:0 0 0 3px rgba(29,107,82,.16)}
+.input[aria-invalid="true"]{border-color:#A3352B}
+.input::placeholder{color:#7C8882}
+.sel{position:relative}
+.sel select{appearance:none;-webkit-appearance:none;padding-right:38px;cursor:pointer}
+.chev{position:absolute;right:12px;top:50%;margin-top:-8px;pointer-events:none;color:#5D6A63}
+.err{margin:6px 0 0;font-size:13px;font-weight:600;color:#A3352B}
+.tab{min-height:40px;padding:0 16px;border-radius:8px;border:0;background:transparent;font-family:inherit;font-size:15px;font-weight:700;color:#4A5751;cursor:pointer;transition:background-color .2s,color .2s}
+.tab:hover{background:rgba(29,107,82,.08)}
+.tab[aria-pressed="true"]{background:#123D32;color:#FFFFFF}
+.search-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr) minmax(0,.9fr) minmax(0,.9fr) auto;gap:12px;align-items:end}
+.hero-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px}
+.hero-copy{padding:64px 0 150px}
+.hero-photo{min-height:600px}
+.ph{position:relative;overflow:hidden;background-color:#C3CEC7}
+.ph-zoom{position:absolute;inset:0;background-image:radial-gradient(120% 90% at 78% 12%,rgba(255,255,255,.38),rgba(255,255,255,0) 58%),repeating-linear-gradient(135deg,rgba(25,35,31,.05) 0 1px,rgba(25,35,31,0) 1px 14px);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.ph-label{position:absolute;left:12px;bottom:10px;right:12px;display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#2E3A34;letter-spacing:.01em}
+.chip{display:inline-flex;align-items:center;min-height:28px;padding:0 10px;border-radius:6px;font-size:12px;font-weight:700;color:#19231F}
+.save{position:absolute;top:10px;right:10px;z-index:2;width:44px;height:44px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:#19231F;transition:transform .2s}
+.save:hover{transform:scale(1.05)}
+.save.on{color:#1D6B52}
+.save.on svg{animation:pop .35s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{0%{transform:scale(.7)}100%{transform:scale(1)}}
+.card{position:relative;transition:box-shadow .25s,transform .25s,border-color .25s}
+.card:hover{box-shadow:0 14px 34px rgba(22,45,33,.09);transform:translateY(-2px);border-color:#D5DED8}
+.card:hover .ph-zoom,.cat:hover .ph-zoom{transform:scale(1.045)}
+.stretch{color:#19231F;text-decoration:none}
+.stretch:hover{color:#123D32}
+.stretch::after{content:"";position:absolute;inset:0;z-index:1;border-radius:14px}
+.cat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:230px;gap:16px}
+.cat{position:relative;display:block;border:0;padding:0;border-radius:14px;overflow:hidden;cursor:pointer;text-align:left;font-family:inherit}
+.cat-a{grid-column:1 / 3;grid-row:1 / 3}
+.cat-band{grid-column:1 / -1}
+.cat-tag{position:absolute;left:14px;bottom:14px;padding:12px 14px;border-radius:10px;display:flex;flex-direction:column;gap:2px}
+.loc-grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:64px}
+.loc-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:40px}
+.row-link{display:flex;align-items:flex-start;gap:16px;width:100%;padding:20px 0;border:0;border-top:1px solid #E3E9E4;background:transparent;text-align:left;font-family:inherit;color:#19231F;cursor:pointer}
+.row-link:hover .rl-title{color:#1D6B52}
+.hood{border:0;background:transparent;padding:6px 0;font-family:inherit;font-size:15px;font-weight:600;color:#1D6B52;cursor:pointer;text-decoration:underline;text-decoration-color:rgba(29,107,82,.3);text-underline-offset:4px}
+.hood:hover{text-decoration-color:#1D6B52}
+.two-col{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px}
+.why-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:48px}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px}
+.seg{display:inline-flex;padding:4px;border-radius:10px;background:rgba(255,255,255,.1);gap:4px}
+.seg-btn{min-height:40px;padding:0 18px;border:0;border-radius:8px;background:transparent;font-family:inherit;font-size:15px;font-weight:700;color:#DCE7E0;cursor:pointer}
+.seg-btn[aria-pressed="true"]{background:#FFFFFF;color:#123D32}
+.svc-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px}
+.guide-grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:48px}
+.tlink{display:inline-flex;align-items:center;gap:6px;font-weight:700;text-decoration:none}
+.foot-grid{display:grid;grid-template-columns:minmax(0,1.6fr) repeat(4,minmax(0,1fr));gap:40px}
+.foot a{color:#C9D8CF;text-decoration:none}
+.foot a:hover{color:#FFFFFF;text-decoration:underline}
+.dash-row{display:grid;grid-template-columns:minmax(0,2.4fr) repeat(2,minmax(0,.8fr)) minmax(0,1fr);gap:12px;align-items:center;padding:12px 0;border-top:1px solid #E3E9E4;font-size:14px}
+.menu-panel a{display:flex;align-items:center;min-height:48px;padding:0 4px;border-bottom:1px solid #E3E9E4;font-size:17px;font-weight:700;color:#19231F;text-decoration:none}
+.rise{animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+.d1{animation-delay:.06s}.d2{animation-delay:.12s}.d3{animation-delay:.18s}.d4{animation-delay:.26s}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.reveal-img{animation:reveal 1s cubic-bezier(.2,.7,.2,1) both}
+@keyframes reveal{from{clip-path:inset(0 0 0 14% round 18px);opacity:.4}to{clip-path:inset(0 0 0 0 round 18px);opacity:1}}
+@supports (animation-timeline: view()){
+.sv{animation:rise linear both;animation-timeline:view();animation-range:entry 0% entry 35%}
+.card,.row-link,.why-grid > div,.foot-grid > *{animation:lift linear both;animation-timeline:view();animation-range:entry 0% entry 40%}
+}
+@keyframes lift{from{opacity:0;translate:0 26px;scale:.98}to{opacity:1;translate:0 0;scale:1}}
+
+/* ---------- Liquid glass ---------- */
+.glass{background:linear-gradient(135deg,rgba(255,255,255,.66),rgba(255,255,255,.32));backdrop-filter:blur(22px) saturate(185%);-webkit-backdrop-filter:blur(22px) saturate(185%);border:1px solid rgba(255,255,255,.72);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 1px rgba(255,255,255,.3),inset 0 0 18px rgba(255,255,255,.18),0 12px 32px rgba(22,45,33,.12),0 2px 6px rgba(22,45,33,.05);isolation:isolate}
+.glass::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;background:radial-gradient(120% 70% at 15% 0%,rgba(255,255,255,.75),rgba(255,255,255,0) 55%),radial-gradient(80% 60% at 100% 100%,rgba(198,166,107,.16),rgba(198,166,107,0) 60%);background-size:200% 200%;animation:caustic 12s ease-in-out infinite alternate}
+@keyframes caustic{0%{background-position:0% 0%,100% 100%}100%{background-position:60% 30%,40% 70%}}
+.glass-dark{background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.04));backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);border:1px solid rgba(255,255,255,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 18px 40px rgba(0,0,0,.18)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glass{background:rgba(255,255,255,.96)}.glass-dark{background:rgba(255,255,255,.1)}}
+
+/* moving colour behind the glass */
+.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.g-root > :not(.aurora){position:relative;z-index:1}
+.blob{position:absolute;width:44vmax;height:44vmax;filter:blur(70px);opacity:.5;border-radius:42% 58% 63% 37% / 45% 41% 59% 55%;will-change:transform;animation:morph 18s ease-in-out infinite alternate,drift 28s ease-in-out infinite alternate}
+.b1{background:#9FD3B8;top:-14vmax;left:-10vmax}
+.b2{background:#EBD6A6;top:22vh;right:-16vmax;animation-delay:-6s,-9s}
+.b3{background:#B3D2E6;bottom:-20vmax;left:28vw;opacity:.38;animation-delay:-12s,-4s}
+@keyframes morph{0%{border-radius:42% 58% 63% 37% / 45% 41% 59% 55%}50%{border-radius:63% 37% 38% 62% / 58% 63% 37% 42%}100%{border-radius:38% 62% 52% 48% / 36% 54% 46% 64%}}
+@keyframes drift{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(6vw,4vh) rotate(25deg)}100%{transform:translate(-4vw,8vh) rotate(-15deg)}}
+.blobbed{position:relative;overflow:hidden;isolation:isolate}
+.blobbed::before,.blobbed::after{content:"";position:absolute;z-index:-1;width:540px;height:540px;filter:blur(80px);pointer-events:none;border-radius:42% 58% 63% 37% / 45% 41% 59% 55%;animation:morph 16s ease-in-out infinite alternate,drift 24s ease-in-out infinite alternate}
+.blobbed::before{top:-200px;left:-120px;background:rgba(46,125,94,.55)}
+.blobbed::after{bottom:-240px;right:-140px;background:rgba(198,166,107,.32);animation-delay:-8s,-12s}
+#developers.blobbed::before{background:rgba(159,211,184,.7)}
+#developers.blobbed::after{background:rgba(235,214,166,.6)}
+
+/* header */
+.site-header{background:rgba(247,248,245,.48);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);box-shadow:inset 0 -1px 0 rgba(255,255,255,.6)}
+@supports (animation-timeline: scroll()){
+@keyframes headsolid{from{background:rgba(247,248,245,.3);border-bottom-color:transparent}to{background:rgba(247,248,245,.72);border-bottom-color:rgba(227,233,228,.8)}}
+}
+
+/* buttons with a liquid gloss */
+.btn{position:relative;overflow:hidden;isolation:isolate}
+.btn::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:45%;z-index:-1;pointer-events:none;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.45),rgba(255,255,255,0));transform:skewX(-20deg);transition:left .7s cubic-bezier(.2,.7,.2,1)}
+.btn:hover::after{left:120%}
+.btn-primary{background:linear-gradient(180deg,#24805F,#1D6B52 55%,#175A45);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 6px 18px rgba(29,107,82,.22)}
+.btn-primary:hover{background:linear-gradient(180deg,#1D6B52,#123D32)}
+.btn-ghost{background:rgba(255,255,255,.42);backdrop-filter:blur(14px) saturate(160%);-webkit-backdrop-filter:blur(14px) saturate(160%);border-color:rgba(255,255,255,.8);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 4px 14px rgba(22,45,33,.06)}
+.btn-ghost:hover{background:rgba(255,255,255,.75)}
+
+/* cards become frosted panels */
+.card{background:rgba(255,255,255,.7) !important;backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);border-color:rgba(255,255,255,.8) !important;box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 6px 20px rgba(22,45,33,.05)}
+.card:hover{transform:translateY(-6px);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 24px 48px rgba(22,45,33,.14)}
+.card::before,.cat::before{content:"";position:absolute;top:0;bottom:0;left:-80%;width:50%;z-index:3;pointer-events:none;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.35),rgba(255,255,255,0));transform:skewX(-18deg);transition:left .9s cubic-bezier(.2,.7,.2,1)}
+.card:hover::before,.cat:hover::before{left:130%}
+.cat{transition:translate .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+.cat:hover{translate:0 -4px;box-shadow:0 22px 44px rgba(22,45,33,.16)}
+.cat-band{background:linear-gradient(110deg,#123D32,#1D6B52 45%,#123D32) !important;background-size:220% 100% !important;animation:bandshift 9s ease-in-out infinite alternate}
+@keyframes bandshift{from{background-position:0% 0}to{background-position:100% 0}}
+
+/* hero: animated skyline scene */
+.hero-scene{background:linear-gradient(180deg,#D7E8DF 0%,#E9EFE3 48%,#F5E7C8 100%)}
+.hero-scene::before{content:"";position:absolute;inset:-20%;background:radial-gradient(40% 35% at 70% 25%,rgba(255,236,190,.85),rgba(255,236,190,0) 70%),radial-gradient(45% 40% at 15% 20%,rgba(159,211,184,.6),rgba(159,211,184,0) 70%);animation:drift 20s ease-in-out infinite alternate}
+.skyline{position:absolute;inset:0;width:100%;height:100%}
+.bld{transform-box:fill-box;transform-origin:50% 100%;animation:grow 1.3s cubic-bezier(.2,.85,.25,1) both}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.win{fill:#F6E2AE;opacity:0;animation:twinkle 6s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:0}35%,70%{opacity:.95}}
+.sun{transform-box:fill-box;transform-origin:center;animation:sunrise 2s cubic-bezier(.2,.7,.2,1) both,glow 5s ease-in-out 2s infinite alternate}
+@keyframes sunrise{from{transform:translateY(120px);opacity:0}to{transform:none;opacity:1}}
+@keyframes glow{from{filter:drop-shadow(0 0 6px rgba(241,217,164,.6))}to{filter:drop-shadow(0 0 26px rgba(241,217,164,.95))}}
+.crane{animation:rise 1s cubic-bezier(.2,.7,.2,1) 1.3s both}
+.jib{transform-box:view-box;transform-origin:440px 221px;animation:swing 7s ease-in-out infinite alternate}
+@keyframes swing{from{transform:rotate(-7deg)}to{transform:rotate(7deg)}}
+.tree{transform-box:fill-box;transform-origin:50% 100%;animation:sway 4s ease-in-out infinite alternate}
+@keyframes sway{from{transform:rotate(-2.5deg)}to{transform:rotate(2.5deg)}}
+.cloud{position:absolute;height:34px;border-radius:999px;background:rgba(255,255,255,.75);filter:blur(2px);animation:cloud 38s linear infinite}
+.cloud::before{content:"";position:absolute;left:22%;top:-18px;width:46%;height:42px;border-radius:999px;background:inherit}
+.c1{top:16%;width:130px;left:-20%}
+.c2{top:30%;width:90px;left:-20%;opacity:.7;animation-duration:52s;animation-delay:-20s}
+@keyframes cloud{from{transform:translateX(0)}to{transform:translateX(900px)}}
+.orb{position:absolute;width:118px;height:118px;border-radius:42% 58% 63% 37% / 45% 41% 59% 55%;background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.95),rgba(255,255,255,.22) 38%,rgba(255,255,255,.06) 70%);backdrop-filter:blur(4px) saturate(170%);-webkit-backdrop-filter:blur(4px) saturate(170%);border:1px solid rgba(255,255,255,.55);box-shadow:inset -10px -14px 28px rgba(255,255,255,.4),inset 10px 12px 26px rgba(18,61,50,.14),0 22px 44px rgba(18,61,50,.16);animation:morph 9s ease-in-out infinite alternate,floaty 7s ease-in-out infinite}
+.floaty{animation:floaty 6s ease-in-out infinite}
+.floaty.f2{animation-duration:7.5s;animation-delay:-2s}
+@keyframes floaty{0%,100%{translate:0 0}50%{translate:0 -12px}}
+.pin{display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50% 50% 50% 6px;rotate:-45deg;color:#123D32}
+.pin svg{rotate:45deg}
+.pin-wrap{animation:drop .9s cubic-bezier(.3,1.5,.5,1) 1.6s both}
+@keyframes drop{from{opacity:0;transform:translateY(-60px)}to{opacity:1;transform:none}}
+.pulse{position:absolute;left:50%;top:100%;width:46px;height:14px;margin:6px 0 0 -23px;border-radius:50%;background:rgba(18,61,50,.25);animation:ping 2.4s ease-out infinite}
+@keyframes ping{0%{transform:scale(.4);opacity:.8}100%{transform:scale(1.8);opacity:0}}
+
+/* headline shimmer + counters */
+.shine-text{background:linear-gradient(100deg,#123D32 0%,#1D6B52 30%,#C6A66B 50%,#1D6B52 70%,#123D32 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 7s ease-in-out infinite alternate}
+@keyframes shine{from{background-position:100% 0}to{background-position:0% 0}}
+@property --n{syntax:'<integer>';inherits:false;initial-value:0}
+.count{counter-reset:n var(--n);animation:count 2.2s cubic-bezier(.2,.7,.2,1) .5s both}
+.count::after{content:counter(n)}
+.n16{--n:16}.n8{--n:8}.n5{--n:5}
+@keyframes count{from{--n:0}}
+.stat{display:flex;flex-direction:column;gap:2px;padding:12px 16px;border-radius:12px}
+.stat b{font-size:26px;line-height:1;font-weight:800;letter-spacing:-.03em;color:#123D32}
+.stat > span{font-size:12px;font-weight:700;color:#46534C}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* location ticker */
+.ticker{overflow:hidden;padding:14px 0;margin-top:56px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.ticker-track{display:flex;gap:14px;width:max-content;animation:marquee 40s linear infinite}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.ticker-item{display:inline-flex;align-items:center;gap:10px;padding:10px 18px;border-radius:999px;font-size:15px;font-weight:700;color:#19231F;white-space:nowrap}
+.ticker-item .bn{font-weight:500;color:#5D6A63}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* kicker line draws in */
+.lang-switch{min-height:38px;padding:0 14px;border-radius:999px;font-size:14px;font-weight:700;color:#123D32;font-family:'Noto Sans Bengali','Manrope',sans-serif}
+.lang-switch:hover{color:#123D32;background:rgba(255,255,255,.8)}
+.kicker::before{animation:line .9s cubic-bezier(.2,.7,.2,1) both}
+@keyframes line{from{width:0}to{width:24px}}
+@media (max-width:1060px){
+.search-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.search-grid .go{grid-column:1 / -1}
+.foot-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.foot-brand{grid-column:1 / -1}
+}
+@media (max-width:960px){
+.nav-links,.nav-desk{display:none !important}
+.burger{display:inline-flex}
+.hero-grid,.loc-grid,.two-col,.svc-grid,.guide-grid{grid-template-columns:minmax(0,1fr);gap:32px}
+.hero-copy{padding:32px 0 0}
+.hero-photo{min-height:360px}
+.cat-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:190px}
+.steps{grid-template-columns:minmax(0,1fr);gap:28px}
+}
+@media (max-width:640px){
+.wrap{padding-left:16px;padding-right:16px}
+.h2{font-size:28px}
+.search-grid,.loc-list,.why-grid{grid-template-columns:minmax(0,1fr)}
+.cat-grid{grid-template-columns:minmax(0,1fr);grid-auto-rows:180px}
+.cat-a{grid-column:auto;grid-row:auto}
+.hero-photo{min-height:300px}
+.foot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.dash-row{grid-template-columns:minmax(0,2fr) repeat(2,minmax(0,.7fr))}
+.dash-row .dash-status{display:none}
+.hide-sm{display:none !important}
+}
+@media (prefers-reduced-motion:reduce){
+.g-root *,.g-root *::before,.g-root *::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}
+}
+</style>
+</helmet>
+<div class="g-root" id="top" style="min-height: 100%">
+<div class="aurora" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<div style="background: #E8F0EA; border-bottom: 1px solid #DCE6DF">
+<div class="wrap" style="display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 38px; font-size: 13px; font-weight: 600; color: #2E4A3F; text-align: center">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5M12 16h.01"></path></svg>
+<span>Design prototype. Listings, counts and forms use sample data — nothing is sent or published.</span>
+</div>
+</div>
+
+<header class="site-header" style="position: sticky; top: 0; z-index: 50">
+<div class="wrap" style="display: flex; align-items: center; gap: 20px; height: 72px">
+<a href="#top" aria-label="Grihova home" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #19231F; flex-shrink: 0">
+<svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#123D32"></rect><path d="M23 14.2 16 8.4 9 14.2V24h14v-5.6" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="square"></path><path d="M23 18.4h-5.6" fill="none" stroke="#C6A66B" stroke-width="2.4" stroke-linecap="square"></path></svg>
+<span style="font-size: 21px; font-weight: 800; letter-spacing: -0.03em">Grihova</span>
+</a>
+<nav class="nav-links" aria-label="Primary" style="display: flex; align-items: center; gap: 2px; margin-left: 20px">
+<a class="navlink" href="#search" onClick="{{navBuy}}">Buy</a>
+<a class="navlink" href="#search" onClick="{{navRent}}">Rent</a>
+<a class="navlink" href="#search" onClick="{{navLand}}">Land</a>
+<a class="navlink" href="#search" onClick="{{navCom}}">Commercial</a>
+<a class="navlink" href="#developers">New Projects</a>
+</nav>
+<div style="flex: 1"></div>
+<div class="nav-desk" style="display: flex; align-items: center; gap: 4px">
+<a class="iconbtn lang-switch glass" href="Main.bn.html" hreflang="bn" lang="bn" title="বাংলা সংস্করণ">বাংলা</a>
+<a class="iconbtn" href="ListProperty.dc.html">List Property</a>
+<button class="iconbtn" type="button" onClick="{{openSaved}}" aria-label="{{savedAria}}">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"></path></svg>
+<span>Saved</span>
+<span style="min-width: 22px; height: 22px; padding: 0 6px; border-radius: 6px; background: #E8F0EA; color: #123D32; font-size: 12px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center">{{savedCount}}</span>
+</button>
+<button class="iconbtn" type="button" onClick="{{openLogin}}">Log In</button>
+<a class="btn btn-primary" href="#search" style="margin-left: 8px">Find Property</a>
+</div>
+<a class="iconbtn burger lang-switch glass" href="Main.bn.html" hreflang="bn" lang="bn" title="বাংলা সংস্করণ">বাংলা</a>
+<a class="iconbtn burger" href="#search" aria-label="Search properties"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m20 20-4.2-4.2"></path></svg></a>
+<button class="iconbtn burger" type="button" aria-expanded="{{menuOpen}}" aria-controls="mobile-menu" aria-label="Open menu" onClick="{{toggleMenu}}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+</button>
+</div>
+<sc-if value="{{menuOpen}}" hint-placeholder-val="{{ false }}">
+<div id="mobile-menu" class="menu-panel rise" style="background: #F7F8F5; border-top: 1px solid #E3E9E4; padding: 8px 16px 20px">
+<nav aria-label="Mobile" style="display: flex; flex-direction: column">
+<a href="#search" onClick="{{navBuy}}">Buy</a>
+<a href="#search" onClick="{{navRent}}">Rent</a>
+<a href="#search" onClick="{{navLand}}">Land</a>
+<a href="#search" onClick="{{navCom}}">Commercial</a>
+<a href="#developers" onClick="{{toggleMenu}}">New Projects</a>
+<a href="ListProperty.dc.html">List Property</a>
+<a href="#listings" onClick="{{openSaved}}">Saved properties ({{savedCount}})</a>
+</nav>
+<button class="btn btn-ghost" type="button" style="width: 100%; margin-top: 16px" onClick="{{openLogin}}">Log In</button>
+</div>
+</sc-if>
+</header>
+
+<main>
+<section class="wrap" aria-labelledby="hero-title" style="padding-top: 24px">
+<div class="hero-grid">
+<div class="hero-copy" style="display: flex; flex-direction: column; gap: 24px">
+<p class="kicker rise">Homes, land &amp; commercial property in Bangladesh</p>
+<h1 id="hero-title" class="rise d1" style="margin: 0; font-size: clamp(40px, 5vw, 64px); line-height: 1.02; font-weight: 800; letter-spacing: -0.04em; color: #19231F; text-wrap: balance">Find a place that <span class="shine-text">feels right.</span></h1>
+<p class="lead rise d2" style="max-width: 460px; font-size: 18px">Explore homes, land, and commercial properties across Bangladesh. Compare your options, connect with property owners, and take your next step with confidence.</p>
+<div class="rise d3" style="display: flex; flex-wrap: wrap; gap: 12px">
+<a class="btn btn-primary" href="#listings">Explore Properties<svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<a class="btn btn-ghost" href="ListProperty.dc.html">List Your Property</a>
+</div>
+<div class="rise d4" style="display: flex; flex-wrap: wrap; gap: 10px">
+<div class="stat glass"><b><span class="count n16" aria-hidden="true"></span><span class="sr">16</span></b><span>Sample listings</span></div>
+<div class="stat glass"><b><span class="count n8" aria-hidden="true"></span><span class="sr">8</span></b><span>Cities covered</span></div>
+<div class="stat glass"><b><span class="count n5" aria-hidden="true"></span><span class="sr">5</span></b><span>Property types</span></div>
+</div>
+</div>
+<div class="ph hero-photo hero-scene reveal-img" role="img" aria-label="Animated illustration: a city skyline rising at sunrise, with a crane at work" style="border-radius: 18px">
+<div class="cloud c1"></div><div class="cloud c2"></div>
+<svg class="skyline" viewBox="0 0 700 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><defs><pattern id="wm" width="16" height="22" patternUnits="userSpaceOnUse"><rect x="3" y="4" width="10" height="12" rx="1.5" fill="#E8F0EA" opacity=".45"></rect></pattern><pattern id="wf" width="16" height="22" patternUnits="userSpaceOnUse"><rect x="3" y="4" width="10" height="12" rx="1.5" fill="#E8F0EA" opacity=".16"></rect></pattern></defs><circle class="sun" cx="520" cy="170" r="46" fill="#F1D9A4"></circle><g class="bld" style="animation-delay: 0.00s"><rect x="0" y="325" width="70" height="260" rx="3" fill="#B5CCBF"></rect></g><g class="bld" style="animation-delay: 0.05s"><rect x="60" y="255" width="50" height="330" rx="3" fill="#B5CCBF"></rect></g><g class="bld" style="animation-delay: 0.10s"><rect x="105" y="355" width="80" height="230" rx="3" fill="#B5CCBF"></rect></g><g class="bld" style="animation-delay: 0.15s"><rect x="180" y="205" width="60" height="380" rx="3" fill="#B5CCBF"></rect></g><g class="bld" style="animation-delay: 0.20s"><rect x="235" y="305" width="90" height="280" rx="3" fill="#B5CCBF"></rect></g><g class="bld" style="animation-delay: 0.25s"><rect x="320" y="235" width="55" height="350" rx="3" fill="#B5CCBF"></rect></g><g class="bld" style="animation-delay: 0.30s"><rect x="370" y="335" width="85" height="250" rx="3" fill="#B5CCBF"></rect></g><g class="bld" style="animation-delay: 0.35s"><rect x="450" y="265" width="60" height="320" rx="3" fill="#B5CCBF"></rect></g><g class="bld" style="animation-delay: 0.40s"><rect x="505" y="315" width="90" height="270" rx="3" fill="#B5CCBF"></rect></g><g class="bld" style="animation-delay: 0.45s"><rect x="590" y="225" width="55" height="360" rx="3" fill="#B5CCBF"></rect></g><g class="bld" style="animation-delay: 0.50s"><rect x="640" y="345" width="70" height="240" rx="3" fill="#B5CCBF"></rect></g><g class="bld" style="animation-delay: 0.35s"><rect x="20" y="385" width="90" height="200" rx="3" fill="#7FA897"></rect><rect x="28" y="399" width="74" height="170" fill="url(#wm)"></rect><rect class="win" x="63" y="425" width="10" height="12" rx="1.5" style="animation-delay: 2.4s"></rect><rect class="win" x="31" y="403" width="10" height="12" rx="1.5" style="animation-delay: 4.9s"></rect></g><g class="bld" style="animation-delay: 0.42s"><rect x="120" y="285" width="70" height="300" rx="3" fill="#7FA897"></rect><rect x="128" y="299" width="54" height="270" fill="url(#wm)"></rect><rect class="win" x="131" y="413" width="10" height="12" rx="1.5" style="animation-delay: 3.5s"></rect><rect class="win" x="163" y="369" width="10" height="12" rx="1.5" style="animation-delay: 0.2s"></rect><rect class="win" x="147" y="435" width="10" height="12" rx="1.5" style="animation-delay: 0.4s"></rect><rect class="win" x="131" y="479" width="10" height="12" rx="1.5" style="animation-delay: 2.5s"></rect></g><g class="bld" style="animation-delay: 0.49s"><rect x="200" y="345" width="100" height="240" rx="3" fill="#7FA897"></rect><rect x="208" y="359" width="84" height="210" fill="url(#wm)"></rect><rect class="win" x="275" y="385" width="10" height="12" rx="1.5" style="animation-delay: 5.7s"></rect><rect class="win" x="275" y="363" width="10" height="12" rx="1.5" style="animation-delay: 3.5s"></rect><rect class="win" x="259" y="363" width="10" height="12" rx="1.5" style="animation-delay: 5.9s"></rect></g><g class="bld" style="animation-delay: 0.56s"><rect x="310" y="255" width="80" height="330" rx="3" fill="#7FA897"></rect><rect x="318" y="269" width="64" height="300" fill="url(#wm)"></rect><rect class="win" x="321" y="449" width="10" height="12" rx="1.5" style="animation-delay: 5.2s"></rect><rect class="win" x="353" y="405" width="10" height="12" rx="1.5" style="animation-delay: 0.9s"></rect><rect class="win" x="321" y="471" width="10" height="12" rx="1.5" style="animation-delay: 1.9s"></rect><rect class="win" x="337" y="295" width="10" height="12" rx="1.5" style="animation-delay: 3.5s"></rect></g><g class="bld" style="animation-delay: 0.63s"><rect x="400" y="365" width="110" height="220" rx="3" fill="#7FA897"></rect><rect x="408" y="379" width="94" height="190" fill="url(#wm)"></rect><rect class="win" x="427" y="493" width="10" height="12" rx="1.5" style="animation-delay: 0.6s"></rect><rect class="win" x="411" y="383" width="10" height="12" rx="1.5" style="animation-delay: 3.7s"></rect><rect class="win" x="459" y="515" width="10" height="12" rx="1.5" style="animation-delay: 4.7s"></rect></g><g class="bld" style="animation-delay: 0.70s"><rect x="520" y="295" width="80" height="290" rx="3" fill="#7FA897"></rect><rect x="528" y="309" width="64" height="260" fill="url(#wm)"></rect><rect class="win" x="579" y="511" width="10" height="12" rx="1.5" style="animation-delay: 5.5s"></rect><rect class="win" x="563" y="401" width="10" height="12" rx="1.5" style="animation-delay: 1.5s"></rect><rect class="win" x="547" y="379" width="10" height="12" rx="1.5" style="animation-delay: 0.5s"></rect><rect class="win" x="563" y="489" width="10" height="12" rx="1.5" style="animation-delay: 3.0s"></rect></g><g class="bld" style="animation-delay: 0.77s"><rect x="610" y="375" width="90" height="210" rx="3" fill="#7FA897"></rect><rect x="618" y="389" width="74" height="180" fill="url(#wm)"></rect><rect class="win" x="653" y="547" width="10" height="12" rx="1.5" style="animation-delay: 1.7s"></rect><rect class="win" x="621" y="415" width="10" height="12" rx="1.5" style="animation-delay: 3.1s"></rect><rect class="win" x="637" y="503" width="10" height="12" rx="1.5" style="animation-delay: 0.9s"></rect></g><g class="crane"><rect x="437" y="222" width="6" height="110" fill="#C6A66B"></rect><g class="jib"><rect x="392" y="218" width="160" height="6" rx="2" fill="#C6A66B"></rect><rect x="392" y="224" width="22" height="14" fill="#8A6A2E"></rect><line x1="522" y1="224" x2="522" y2="268" stroke="#8A6A2E" stroke-width="1.5"></line><rect x="510" y="268" width="24" height="12" rx="2" fill="#E8F0EA" stroke="#8A6A2E"></rect></g></g><g class="bld" style="animation-delay: 0.80s"><rect x="-10" y="415" width="120" height="170" rx="3" fill="#1D6B52"></rect><rect x="-2" y="429" width="104" height="140" fill="url(#wf)"></rect><rect class="win" x="49" y="499" width="10" height="12" rx="1.5" style="animation-delay: 0.2s"></rect><rect class="win" x="81" y="433" width="10" height="12" rx="1.5" style="animation-delay: 4.6s"></rect></g><g class="bld" style="animation-delay: 0.89s"><rect x="140" y="330" width="95" height="255" rx="3" fill="#123D32"></rect><rect x="148" y="344" width="79" height="225" fill="url(#wf)"></rect><rect class="win" x="183" y="458" width="10" height="12" rx="1.5" style="animation-delay: 4.2s"></rect><rect class="win" x="199" y="546" width="10" height="12" rx="1.5" style="animation-delay: 4.8s"></rect><rect class="win" x="151" y="370" width="10" height="12" rx="1.5" style="animation-delay: 5.7s"></rect></g><g class="bld" style="animation-delay: 0.98s"><rect x="250" y="425" width="130" height="160" rx="3" fill="#1D6B52"></rect><rect x="258" y="439" width="114" height="130" fill="url(#wf)"></rect><rect class="win" x="309" y="443" width="10" height="12" rx="1.5" style="animation-delay: 0.4s"></rect><rect class="win" x="341" y="487" width="10" height="12" rx="1.5" style="animation-delay: 3.9s"></rect></g><g class="bld" style="animation-delay: 1.07s"><rect x="395" y="330" width="90" height="255" rx="3" fill="#123D32"></rect><rect x="403" y="344" width="74" height="225" fill="url(#wf)"></rect><rect class="win" x="454" y="436" width="10" height="12" rx="1.5" style="animation-delay: 4.3s"></rect><rect class="win" x="438" y="348" width="10" height="12" rx="1.5" style="animation-delay: 5.6s"></rect><rect class="win" x="438" y="392" width="10" height="12" rx="1.5" style="animation-delay: 3.7s"></rect></g><g class="bld" style="animation-delay: 1.16s"><rect x="500" y="435" width="140" height="150" rx="3" fill="#1D6B52"></rect><rect x="508" y="449" width="124" height="120" fill="url(#wf)"></rect><rect class="win" x="559" y="453" width="10" height="12" rx="1.5" style="animation-delay: 1.3s"></rect><rect class="win" x="543" y="475" width="10" height="12" rx="1.5" style="animation-delay: 4.4s"></rect></g><g class="bld" style="animation-delay: 1.25s"><rect x="620" y="385" width="100" height="200" rx="3" fill="#174F40"></rect><rect x="628" y="399" width="84" height="170" fill="url(#wf)"></rect><rect class="win" x="679" y="469" width="10" height="12" rx="1.5" style="animation-delay: 5.5s"></rect><rect class="win" x="679" y="403" width="10" height="12" rx="1.5" style="animation-delay: 1.0s"></rect></g><g class="tree" style="animation-delay: 0.0s"><rect x="118.5" y="571" width="3" height="14" fill="#123D32"></rect><circle cx="120" cy="559" r="16" fill="#2E7D5E"></circle></g><g class="tree" style="animation-delay: -0.7s"><rect x="236.5" y="571" width="3" height="14" fill="#123D32"></rect><circle cx="238" cy="562" r="13" fill="#2E7D5E"></circle></g><g class="tree" style="animation-delay: -1.4s"><rect x="378.5" y="571" width="3" height="14" fill="#123D32"></rect><circle cx="380" cy="560" r="15" fill="#2E7D5E"></circle></g><g class="tree" style="animation-delay: -2.1s"><rect x="598.5" y="571" width="3" height="14" fill="#123D32"></rect><circle cx="600" cy="558" r="17" fill="#2E7D5E"></circle></g><g class="tree" style="animation-delay: -2.8s"><rect x="688.5" y="571" width="3" height="14" fill="#123D32"></rect><circle cx="690" cy="561" r="14" fill="#2E7D5E"></circle></g><rect x="0" y="585" width="700" height="15" fill="#123D32"></rect></svg>
+<div class="orb" aria-hidden="true" style="left: 7%; top: 9%"></div>
+<div class="pin-wrap" aria-hidden="true" style="position: absolute; left: 26%; top: 26%"><div class="floaty f2" style="position: relative"><span class="pin glass"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 11.5 12 5l8 6.5V20H4z"></path><path d="M10 20v-5h4v5"></path></svg></span><span class="pulse"></span></div></div>
+<span class="glass floaty f2 hide-sm" style="position: absolute; right: 20px; top: 20px; z-index: 2; display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 999px; font-size: 13px; font-weight: 700; color: #123D32"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2.2" aria-hidden="true"><path d="M12 3l7 3v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6l7-3Z"></path><path d="m9 12 2 2 4-4"></path></svg>Owner identity checked</span>
+<a href="Property.dc.html" class="glass floaty" style="position: absolute; right: 20px; bottom: 136px; z-index: 2; display: flex; align-items: center; gap: 12px; padding: 10px 14px 10px 10px; border-radius: 12px; text-decoration: none; color: #19231F; max-width: calc(100% - 40px)">
+<span class="ph" aria-hidden="true" style="width: 52px; height: 52px; border-radius: 8px; flex-shrink: 0; background-color: #B7C6BC"><span class="ph-zoom"></span></span>
+<span style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+<span style="font-size: 12px; font-weight: 600; color: #46534C">Sample listing · Gulshan 2, Dhaka</span>
+<span style="font-size: 15px; font-weight: 800; letter-spacing: -0.01em">৳6.4 Cr · 4 bed · 2,650 sqft</span>
+</span>
+<svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="flex-shrink: 0"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+</a>
+</div>
+</div>
+
+<form id="search" class="glass rise d4" aria-label="Property search" onSubmit="{{submitSearch}}" style="position: relative; z-index: 5; margin-top: -112px; max-width: 1100px; border-radius: 16px; padding: 18px 20px 20px; scroll-margin-top: 96px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px">
+<div role="group" aria-label="Transaction type" style="display: flex; gap: 4px; padding: 4px; border-radius: 10px; background: rgba(232,240,234,.8)">
+<button class="tab" type="button" aria-pressed="{{isBuy}}" onClick="{{dealBuy}}">Buy</button>
+<button class="tab" type="button" aria-pressed="{{isRent}}" onClick="{{dealRent}}">Rent</button>
+<button class="tab" type="button" aria-pressed="{{isCom}}" onClick="{{dealCom}}">Commercial</button>
+</div>
+<sc-if value="{{isCom}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; align-items: center; gap: 8px">
+<label for="f-comdeal" style="font-size: 13px; font-weight: 700; color: #33403A">Looking to</label>
+<div class="sel"><select id="f-comdeal" class="input" style="height: 40px; width: 130px" value="{{comDeal}}" onChange="{{setComDeal}}"><option value="rent">Rent</option><option value="buy">Buy</option></select><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div>
+</div>
+</sc-if>
+</div>
+<div class="search-grid">
+<div>
+<label class="lbl" for="f-type">Property type</label>
+<div class="sel"><select id="f-type" class="input" value="{{type}}" onChange="{{setType}}">
+<option value="any">Any type</option>
+<option value="Apartment">Apartment</option>
+<option value="House">House</option>
+<option value="Plot/Land">Plot / Land</option>
+<option value="Office">Office</option>
+<option value="Shop">Shop</option>
+<option value="Other">Other</option>
+</select><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div>
+</div>
+<div>
+<label class="lbl" for="f-loc">Location</label>
+<div style="position: relative">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="position: absolute; left: 14px; top: 16px; color: #5D6A63"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>
+<input id="f-loc" class="input" list="loc-list" autocomplete="off" placeholder="Area or city, e.g. Dhanmondi" style="padding-left: 38px" value="{{loc}}" onChange="{{setLoc}}" aria-invalid="{{locInvalid}}" aria-describedby="search-err">
+<datalist id="loc-list">
+<option value="Dhaka"></option><option value="Gulshan"></option><option value="Banani"></option><option value="Dhanmondi"></option><option value="Bashundhara R/A"></option><option value="Uttara"></option><option value="Mirpur"></option><option value="Purbachal"></option><option value="Chattogram"></option><option value="Khulshi"></option><option value="Agrabad"></option><option value="Feni"></option><option value="Sylhet"></option><option value="Khulna"></option><option value="Rajshahi"></option><option value="Cumilla"></option><option value="Cox's Bazar"></option>
+</datalist>
+</div>
+</div>
+<sc-if value="{{saleBudget}}" hint-placeholder-val="{{ true }}">
+<div>
+<label class="lbl" for="f-min">Min price</label>
+<div class="sel"><select id="f-min" class="input" value="{{min}}" onChange="{{setMin}}" aria-invalid="{{budgetInvalid}}">
+<option value="">No min</option><option value="2500000">৳25 Lakh</option><option value="5000000">৳50 Lakh</option><option value="7500000">৳75 Lakh</option><option value="10000000">৳1 Cr</option><option value="15000000">৳1.5 Cr</option><option value="20000000">৳2 Cr</option><option value="30000000">৳3 Cr</option><option value="50000000">৳5 Cr</option>
+</select><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div>
+</div>
+<div>
+<label class="lbl" for="f-max">Max price</label>
+<div class="sel"><select id="f-max" class="input" value="{{max}}" onChange="{{setMax}}" aria-invalid="{{budgetInvalid}}">
+<option value="">No max</option><option value="5000000">৳50 Lakh</option><option value="7500000">৳75 Lakh</option><option value="10000000">৳1 Cr</option><option value="15000000">৳1.5 Cr</option><option value="20000000">৳2 Cr</option><option value="30000000">৳3 Cr</option><option value="50000000">৳5 Cr</option><option value="100000000">৳10 Cr</option>
+</select><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div>
+</div>
+</sc-if>
+<sc-if value="{{rentBudget}}" hint-placeholder-val="{{ false }}">
+<div>
+<label class="lbl" for="f-rmin">Min rent / month</label>
+<div class="sel"><select id="f-rmin" class="input" value="{{min}}" onChange="{{setMin}}" aria-invalid="{{budgetInvalid}}">
+<option value="">No min</option><option value="10000">৳10,000</option><option value="15000">৳15,000</option><option value="20000">৳20,000</option><option value="30000">৳30,000</option><option value="50000">৳50,000</option><option value="100000">৳1,00,000</option>
+</select><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div>
+</div>
+<div>
+<label class="lbl" for="f-rmax">Max rent / month</label>
+<div class="sel"><select id="f-rmax" class="input" value="{{max}}" onChange="{{setMax}}" aria-invalid="{{budgetInvalid}}">
+<option value="">No max</option><option value="15000">৳15,000</option><option value="20000">৳20,000</option><option value="30000">৳30,000</option><option value="50000">৳50,000</option><option value="100000">৳1,00,000</option><option value="200000">৳2,00,000</option>
+</select><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div>
+</div>
+</sc-if>
+<button class="btn btn-primary go" type="submit" style="height: 48px; padding: 0 22px">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m20 20-4.2-4.2"></path></svg>
+Search Properties
+</button>
+</div>
+<div id="search-err" aria-live="polite">
+<sc-if value="{{hasErr}}" hint-placeholder-val="{{ false }}">
+<p class="err" style="margin-top: 12px">{{err}}</p>
+</sc-if>
+</div>
+</form>
+<div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Dhaka<span class="bn">ঢাকা</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Chattogram<span class="bn">চট্টগ্রাম</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Sylhet<span class="bn">সিলেট</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Feni<span class="bn">ফেনী</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Cumilla<span class="bn">কুমিল্লা</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Khulna<span class="bn">খুলনা</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Rajshahi<span class="bn">রাজশাহী</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Cox's Bazar<span class="bn">কক্সবাজার</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Gulshan<span class="bn">গুলশান</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Dhanmondi<span class="bn">ধানমন্ডি</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Uttara<span class="bn">উত্তরা</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Purbachal<span class="bn">পূর্বাচল</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Dhaka<span class="bn">ঢাকা</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Chattogram<span class="bn">চট্টগ্রাম</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Sylhet<span class="bn">সিলেট</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Feni<span class="bn">ফেনী</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Cumilla<span class="bn">কুমিল্লা</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Khulna<span class="bn">খুলনা</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Rajshahi<span class="bn">রাজশাহী</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Cox's Bazar<span class="bn">কক্সবাজার</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Gulshan<span class="bn">গুলশান</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Dhanmondi<span class="bn">ধানমন্ডি</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Uttara<span class="bn">উত্তরা</span></span><span class="ticker-item glass"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>Purbachal<span class="bn">পূর্বাচল</span></span></div></div>
+</section>
+
+<section id="listings" class="wrap" aria-labelledby="listings-title" style="padding-top: 96px; padding-bottom: 32px; scroll-margin-top: 80px">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 28px">
+<div style="display: flex; flex-direction: column; gap: 10px; max-width: 680px">
+<h2 id="listings-title" class="h2 sv">{{listHeading}}</h2>
+<p class="lead" style="font-size: 16px">{{listSub}}</p>
+</div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<sc-if value="{{isFiltered}}" hint-placeholder-val="{{ false }}">
+<button class="btn btn-ghost" type="button" onClick="{{clearSearch}}">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+Clear
+</button>
+</sc-if>
+<a class="btn btn-ghost" href="Results.dc.html">View All Properties<svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</div>
+
+<sc-if value="{{isEmpty}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 40px; border: 1px dashed #CFD9D2; border-radius: 14px; background: #FFFFFF">
+<p style="margin: 0; font-size: 20px; font-weight: 800; letter-spacing: -0.015em">{{emptyTitle}}</p>
+<p class="lead" style="font-size: 15px; max-width: 560px">{{emptyBody}}</p>
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<button class="btn btn-primary" type="button" onClick="{{clearSearch}}">Show featured listings</button>
+<a class="btn btn-ghost" href="#match">Tell us what you're looking for</a>
+</div>
+</div>
+</sc-if>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 24px">
+<sc-for list="{{cards}}" as="item" hint-placeholder-count="6">
+<article class="card" style="display: flex; flex-direction: column; background: #FFFFFF; border: 1px solid #E3E9E4; border-radius: 14px; overflow: hidden">
+<div class="ph" style="aspect-ratio: 4 / 3; background-color: {{item.tone}}">
+<div class="ph-zoom"></div>
+<span class="ph-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"></rect><circle cx="12" cy="13" r="3.5"></circle></svg>Photo · {{item.photo}}</span>
+<span class="chip glass" style="position: absolute; top: 12px; left: 12px">{{item.status}}</span>
+<button class="save glass {{item.saveCls}}" type="button" aria-pressed="{{item.saved}}" aria-label="{{item.saveLabel}}" onClick="{{item.toggle}}">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="{{item.heartFill}}" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"></path></svg>
+</button>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 18px 18px 16px; flex: 1">
+<p style="margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #19231F">{{item.priceLabel}}</p>
+<h3 style="margin: 0; font-size: 16px; line-height: 1.35; font-weight: 700"><a class="stretch" href="Property.dc.html">{{item.title}}</a></h3>
+<p style="margin: 0; display: flex; align-items: center; gap: 6px; font-size: 14px; color: #5D6A63"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>{{item.place}}</p>
+<p style="margin: 4px 0 0; font-size: 14px; font-weight: 600; color: #33403A">{{item.specs}}</p>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 14px; border-top: 1px solid #EDF1EE; font-size: 13px">
+<span style="color: #5D6A63; font-weight: 600">{{item.type}}</span>
+<sc-if value="{{item.hasVerify}}" hint-placeholder-val="{{ false }}">
+<span style="display: inline-flex; align-items: center; gap: 5px; color: #1D6B52; font-weight: 700"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 3l7 3v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6l7-3Z"></path><path d="m9 12 2 2 4-4"></path></svg>{{item.verify}}</span>
+</sc-if>
+</div>
+</div>
+</article>
+</sc-for>
+</div>
+<p style="margin: 20px 0 0; font-size: 13px; color: #5D6A63">“Owner identity checked” means the Grihova team matched the lister’s national ID to the ownership papers they showed us. It is not a title or legal clearance. <a href="Property.dc.html">How listing checks work</a></p>
+</section>
+
+<section class="wrap" aria-labelledby="cat-title" style="padding-top: 88px; padding-bottom: 32px">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 28px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<p class="kicker">Browse by type</p>
+<h2 id="cat-title" class="h2 sv">Start with the kind of place you need</h2>
+</div>
+<p class="lead" style="font-size: 15px; max-width: 360px">Each tile filters the sample listings above. Counts come from that data.</p>
+</div>
+<div class="cat-grid">
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="5">
+<button type="button" class="cat ph sv {{c.cls}}" onClick="{{c.go}}" style="background-color: {{c.tone}}">
+<span class="ph-zoom"></span>
+<span class="ph-label" style="top: 12px; bottom: auto">Photo · {{c.photo}}</span>
+<span class="cat-tag glass">
+<span style="font-size: 18px; font-weight: 800; letter-spacing: -0.015em; color: #19231F">{{c.name}}</span>
+<span style="font-size: 13px; font-weight: 600; color: #46534C">{{c.count}}</span>
+</span>
+</button>
+</sc-for>
+<a href="#developers" class="cat cat-band sv" style="display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 28px 32px; background: #123D32; color: #FFFFFF; text-decoration: none">
+<span style="display: flex; flex-direction: column; gap: 6px; max-width: 640px">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #C6A66B">New developments</span>
+<span style="font-size: 24px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2">Project pages from developers, with floor plans and handover timelines</span>
+<span style="font-size: 15px; color: #C9D8CF">Project listings open once developers publish them. See what developers can share.</span>
+</span>
+<svg class="arr" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.8" aria-hidden="true" style="flex-shrink: 0"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+</a>
+</div>
+</section>
+
+<section class="wrap" aria-labelledby="loc-title" style="padding-top: 88px; padding-bottom: 32px">
+<div class="loc-grid">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<p class="kicker">Browse by location</p>
+<h2 id="loc-title" class="h2 sv">Where in Bangladesh?</h2>
+<p class="lead" style="font-size: 16px">Pick a city to see its sample listings, or jump straight to a Dhaka neighbourhood.</p>
+<div style="margin-top: 12px; padding-top: 20px; border-top: 1px solid #E3E9E4">
+<p style="margin: 0 0 8px; font-size: 13px; font-weight: 700; color: #33403A">Dhaka neighbourhoods</p>
+<div style="display: flex; flex-wrap: wrap; column-gap: 18px; row-gap: 2px">
+<sc-for list="{{hoods}}" as="h" hint-placeholder-count="7">
+<button type="button" class="hood" onClick="{{h.go}}">{{h.name}}</button>
+</sc-for>
+</div>
+</div>
+</div>
+<div class="loc-list">
+<sc-for list="{{locs}}" as="l" hint-placeholder-count="8">
+<button type="button" class="row-link" onClick="{{l.go}}">
+<span style="display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0">
+<span style="display: flex; align-items: baseline; gap: 10px">
+<span class="rl-title" style="font-size: 20px; font-weight: 800; letter-spacing: -0.015em; transition: color .2s">{{l.en}}</span>
+<span class="bn" style="font-size: 15px; font-weight: 500; color: #5D6A63">{{l.bn}}</span>
+</span>
+<span style="font-size: 14px; color: #5D6A63">{{l.desc}}</span>
+<span style="font-size: 13px; font-weight: 700; color: #1D6B52">{{l.count}}</span>
+</span>
+<svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="margin-top: 6px; color: #1D6B52"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+</button>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section id="match" class="blobbed" aria-labelledby="match-title" style="margin-top: 96px; background: #123D32; color: #FFFFFF; scroll-margin-top: 72px">
+<div class="wrap two-col" style="padding-top: 88px; padding-bottom: 88px; align-items: start">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<p class="kicker" style="color: #C6A66B">Find a property for me</p>
+<h2 id="match-title" class="h2 sv" style="color: #FFFFFF">Tell us what you’re looking for. We’ll bring the matches to you.</h2>
+<p class="lead" style="color: #C9D8CF">Not every good property is listed the day you search. Share your area, budget and must-haves once, and we’ll contact you when a suitable match comes in.</p>
+<ol style="list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column">
+<li style="display: flex; gap: 16px; padding: 16px 0; border-top: 1px solid rgba(255,255,255,.14)"><span style="font-size: 13px; font-weight: 800; color: #C6A66B; min-width: 24px">01</span><span style="color: #E4ECE7">Share your requirements — takes about two minutes.</span></li>
+<li style="display: flex; gap: 16px; padding: 16px 0; border-top: 1px solid rgba(255,255,255,.14)"><span style="font-size: 13px; font-weight: 800; color: #C6A66B; min-width: 24px">02</span><span style="color: #E4ECE7">We compare new and existing listings against them.</span></li>
+<li style="display: flex; gap: 16px; padding: 16px 0; border-top: 1px solid rgba(255,255,255,.14); border-bottom: 1px solid rgba(255,255,255,.14)"><span style="font-size: 13px; font-weight: 800; color: #C6A66B; min-width: 24px">03</span><span style="color: #E4ECE7">You hear back by phone with shortlisted options. No spam, and you can stop at any time.</span></li>
+</ol>
+</div>
+
+<div style="background: #FFFFFF; color: #19231F; border-radius: 16px; padding: 28px; box-shadow: 0 24px 60px rgba(0,0,0,.18)">
+<sc-if value="{{reqDone}}" hint-placeholder-val="{{ false }}">
+<div class="rise" role="status" style="display: flex; flex-direction: column; gap: 14px; padding: 12px 0">
+<span style="width: 48px; height: 48px; border-radius: 12px; background: #E8F0EA; color: #1D6B52; display: inline-flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"></path></svg></span>
+<p style="margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.02em">Requirements captured, {{reqFirstName}}.</p>
+<p class="lead" style="font-size: 15px">This is a design prototype, so your request has <strong>not</strong> been sent to anyone. Once the matching service is connected, this step will confirm a reference number and when to expect a call.</p>
+<div style="padding: 14px 16px; border-radius: 10px; background: #F7F8F5; font-size: 14px; color: #33403A">{{reqSummary}}</div>
+<button class="btn btn-ghost" type="button" onClick="{{reqReset}}" style="align-self: flex-start">Edit requirements</button>
+</div>
+</sc-if>
+<sc-if value="{{reqOpen}}" hint-placeholder-val="{{ true }}">
+<form onSubmit="{{submitReq}}" novalidate="" aria-labelledby="req-title" style="display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<h3 id="req-title" style="margin: 0; font-size: 20px; font-weight: 800; letter-spacing: -0.015em">Your requirements</h3>
+<span style="font-size: 12px; font-weight: 700; color: #5D6A63; padding: 4px 8px; border-radius: 6px; background: #F1F4F1">Demo form</span>
+</div>
+<div role="group" aria-label="Looking to" style="display: flex; gap: 4px; padding: 4px; border-radius: 10px; background: #E8F0EA; align-self: flex-start">
+<button class="tab" type="button" aria-pressed="{{reqBuy}}" onClick="{{reqModeBuy}}">Buy</button>
+<button class="tab" type="button" aria-pressed="{{reqRent}}" onClick="{{reqModeRent}}">Rent</button>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 14px">
+<div>
+<label class="lbl" for="r-area">Preferred area</label>
+<input id="r-area" class="input" list="loc-list" placeholder="e.g. Uttara" value="{{req.area}}" onChange="{{rqArea}}" aria-invalid="{{has.area}}" aria-describedby="r-area-e">
+<sc-if value="{{has.area}}" hint-placeholder-val="{{ false }}"><p id="r-area-e" class="err">{{e.area}}</p></sc-if>
+</div>
+<div>
+<label class="lbl" for="r-type">Property type</label>
+<div class="sel"><select id="r-type" class="input" value="{{req.type}}" onChange="{{rqType}}">
+<option value="Apartment">Apartment</option><option value="House">House</option><option value="Plot/Land">Plot / Land</option><option value="Office">Office</option><option value="Shop">Shop</option>
+</select><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div>
+</div>
+<div>
+<label class="lbl" for="r-budget">{{reqBudgetLabel}}</label>
+<input id="r-budget" class="input" inputmode="text" placeholder="{{reqBudgetHint}}" value="{{req.budget}}" onChange="{{rqBudget}}" aria-invalid="{{has.budget}}" aria-describedby="r-budget-e">
+<sc-if value="{{has.budget}}" hint-placeholder-val="{{ false }}"><p id="r-budget-e" class="err">{{e.budget}}</p></sc-if>
+</div>
+<div>
+<label class="lbl" for="r-beds">Bedrooms</label>
+<div class="sel"><select id="r-beds" class="input" value="{{req.beds}}" onChange="{{rqBeds}}">
+<option value="">Any / not applicable</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option><option value="4">4+</option>
+</select><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div>
+</div>
+<div>
+<label class="lbl" for="r-name">Your name</label>
+<input id="r-name" class="input" autocomplete="name" value="{{req.name}}" onChange="{{rqName}}" aria-invalid="{{has.name}}" aria-describedby="r-name-e">
+<sc-if value="{{has.name}}" hint-placeholder-val="{{ false }}"><p id="r-name-e" class="err">{{e.name}}</p></sc-if>
+</div>
+<div>
+<label class="lbl" for="r-phone">Mobile number</label>
+<div style="display: flex">
+<span aria-hidden="true" style="display: inline-flex; align-items: center; padding: 0 12px; border: 1px solid #D5DED8; border-right: 0; border-radius: 8px 0 0 8px; background: #F1F4F1; font-size: 15px; font-weight: 700; color: #33403A">+880</span>
+<input id="r-phone" class="input" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="1712 345678" style="border-radius: 0 8px 8px 0" value="{{req.phone}}" onChange="{{rqPhone}}" aria-invalid="{{has.phone}}" aria-describedby="r-phone-e">
+</div>
+<sc-if value="{{has.phone}}" hint-placeholder-val="{{ false }}"><p id="r-phone-e" class="err">{{e.phone}}</p></sc-if>
+</div>
+</div>
+<div>
+<label style="display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: #33403A; cursor: pointer">
+<input type="checkbox" checked="{{req.consent}}" onChange="{{rqConsent}}" aria-invalid="{{has.consent}}" aria-describedby="r-consent-e" style="width: 20px; height: 20px; margin: 1px 0 0; accent-color: #1D6B52; flex-shrink: 0">
+<span>Grihova may contact me by phone or SMS about properties that match these requirements.</span>
+</label>
+<sc-if value="{{has.consent}}" hint-placeholder-val="{{ false }}"><p id="r-consent-e" class="err">{{e.consent}}</p></sc-if>
+</div>
+<button class="btn btn-primary" type="submit" style="width: 100%; height: 50px">Tell Us What You’re Looking For</button>
+<p style="margin: 0; font-size: 12px; color: #5D6A63">Prototype: submitting checks the form but sends nothing.</p>
+</form>
+</sc-if>
+</div>
+</div>
+</section>
+
+<section class="wrap" aria-labelledby="why-title" style="padding-top: 96px; padding-bottom: 32px">
+<div class="two-col" style="grid-template-columns: minmax(0, 4fr) minmax(0, 8fr)">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<p class="kicker">Why Grihova</p>
+<h2 id="why-title" class="h2 sv">Less guesswork between you and the right property.</h2>
+<p class="lead" style="font-size: 16px">What the platform does for you — and, just as clearly, what it doesn’t.</p>
+</div>
+<div class="why-grid">
+<div style="padding: 24px 0; border-top: 1px solid #D5DED8; display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -0.01em">The same facts on every listing</h3>
+<p style="margin: 0; font-size: 15px; color: #5D6A63">Price, size in sqft, floor, facing, handover status and service charge sit in the same place, so comparing two flats takes seconds.</p>
+</div>
+<div style="padding: 24px 0; border-top: 1px solid #D5DED8; display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -0.01em">Inquiries go to the right person</h3>
+<p style="margin: 0; font-size: 15px; color: #5D6A63">Your message reaches the owner or the agent named on the listing — not a call centre.</p>
+</div>
+<div style="padding: 24px 0; border-top: 1px solid #D5DED8; display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -0.01em">Viewings on your schedule</h3>
+<p style="margin: 0; font-size: 15px; color: #5D6A63">Pick a day and time slot from the listing page. The lister confirms or suggests another time.</p>
+</div>
+<div style="padding: 24px 0; border-top: 1px solid #D5DED8; display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -0.01em">Know who you’re dealing with</h3>
+<p style="margin: 0; font-size: 15px; color: #5D6A63">Every listing shows whether it comes from an owner, an agent or a developer, with their profile and other listings.</p>
+</div>
+<div style="padding: 24px 0; border-top: 1px solid #D5DED8; display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -0.01em">Labels that say exactly what was checked</h3>
+<p style="margin: 0; font-size: 15px; color: #5D6A63">A check mark names the check and its date. No listing is labelled “verified” in general, and none is a guarantee of clean title.</p>
+</div>
+<div style="padding: 24px 0; border-top: 1px solid #D5DED8; display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -0.01em">Professional help when you need it</h3>
+<p style="margin: 0; font-size: 15px; color: #5D6A63">Lawyers, surveyors and valuers are available through partner referrals, clearly marked as independent services.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="how-title" style="margin-top: 88px; background: #FFFFFF; border-top: 1px solid #E3E9E4; border-bottom: 1px solid #E3E9E4">
+<div class="wrap" style="padding-top: 80px; padding-bottom: 80px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 44px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<p class="kicker">How it works</p>
+<h2 id="how-title" class="h2 sv">From first search to keys in hand</h2>
+</div>
+<a class="btn btn-primary" href="#search">Start searching<svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+<ol class="steps" style="list-style: none; margin: 0; padding: 0">
+<li class="sv" style="display: flex; flex-direction: column; gap: 12px; padding-top: 24px; border-top: 2px solid #123D32">
+<span style="font-size: 44px; line-height: 1; font-weight: 800; letter-spacing: -0.04em; color: #1D6B52">01</span>
+<h3 style="margin: 0; font-size: 20px; font-weight: 800; letter-spacing: -0.015em">Search for a property</h3>
+<p style="margin: 0; font-size: 15px; color: #5D6A63">Filter by area, type, budget and bedrooms. Save the ones worth a second look — they stay on your device until you sign in.</p>
+</li>
+<li class="sv" style="display: flex; flex-direction: column; gap: 12px; padding-top: 24px; border-top: 2px solid #A9C2B4">
+<span style="font-size: 44px; line-height: 1; font-weight: 800; letter-spacing: -0.04em; color: #1D6B52">02</span>
+<h3 style="margin: 0; font-size: 20px; font-weight: 800; letter-spacing: -0.015em">Compare options and connect</h3>
+<p style="margin: 0; font-size: 15px; color: #5D6A63">Put shortlisted listings side by side, read what each label means, and send a question straight to the lister.</p>
+</li>
+<li class="sv" style="display: flex; flex-direction: column; gap: 12px; padding-top: 24px; border-top: 2px solid #DCE6DF">
+<span style="font-size: 44px; line-height: 1; font-weight: 800; letter-spacing: -0.04em; color: #1D6B52">03</span>
+<h3 style="margin: 0; font-size: 20px; font-weight: 800; letter-spacing: -0.015em">Arrange a viewing, then decide</h3>
+<p style="margin: 0; font-size: 15px; color: #5D6A63">Book a slot, visit in person, and bring in a lawyer or surveyor through our partners before any booking money changes hands.</p>
+</li>
+</ol>
+</div>
+</section>
+
+<section id="developers" class="blobbed" aria-labelledby="dev-title" style="background: #E8F0EA; scroll-margin-top: 72px">
+<div class="wrap two-col" style="padding-top: 88px; padding-bottom: 88px; align-items: center">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<p class="kicker">For developers, agents &amp; owners</p>
+<h2 id="dev-title" class="h2 sv">Put your properties in front of serious buyers — and keep every inquiry in one place.</h2>
+<ul style="list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 12px 24px">
+<li style="display: flex; gap: 10px; font-size: 15px; color: #33403A"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2.2" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="m5 12 4.5 4.5L19 7"></path></svg>Publish listings in minutes</li>
+<li style="display: flex; gap: 10px; font-size: 15px; color: #33403A"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2.2" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="m5 12 4.5 4.5L19 7"></path></svg>Showcase projects with floor plans</li>
+<li style="display: flex; gap: 10px; font-size: 15px; color: #33403A"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2.2" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="m5 12 4.5 4.5L19 7"></path></svg>Receive inquiries with buyer details</li>
+<li style="display: flex; gap: 10px; font-size: 15px; color: #33403A"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2.2" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="m5 12 4.5 4.5L19 7"></path></svg>Confirm or reschedule viewings</li>
+<li style="display: flex; gap: 10px; font-size: 15px; color: #33403A"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2.2" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="m5 12 4.5 4.5L19 7"></path></svg>Keep listing details up to date</li>
+<li style="display: flex; gap: 10px; font-size: 15px; color: #33403A"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2.2" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="m5 12 4.5 4.5L19 7"></path></svg>Paid promotion options [coming later]</li>
+</ul>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px">
+<a class="btn btn-primary" href="ListProperty.dc.html">List Your Property</a>
+<a class="btn btn-ghost" href="#contact" style="background: #FFFFFF">Explore Developer Solutions<svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</div>
+<div class="sv glass" style="position: relative; border-radius: 16px; padding: 24px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px">
+<p style="margin: 0; font-size: 16px; font-weight: 800">Your listings</p>
+<span style="font-size: 12px; font-weight: 700; color: #5D6A63; padding: 4px 8px; border-radius: 6px; background: #F1F4F1">Sample dashboard</span>
+</div>
+<div class="dash-row" style="border-top: 0; font-size: 12px; font-weight: 700; color: #5D6A63; text-transform: uppercase; letter-spacing: .04em">
+<span>Listing</span><span>Inquiries</span><span>Viewings</span><span class="dash-status">Status</span>
+</div>
+<div class="dash-row"><span style="font-weight: 700">3-bed, Dhanmondi Road 27</span><span>12</span><span>3</span><span class="dash-status" style="color: #1D6B52; font-weight: 700">Live</span></div>
+<div class="dash-row"><span style="font-weight: 700">Office floor, Agrabad</span><span>5</span><span>1</span><span class="dash-status" style="color: #1D6B52; font-weight: 700">Live</span></div>
+<div class="dash-row"><span style="font-weight: 700">5 katha plot, Purbachal</span><span>8</span><span>2</span><span class="dash-status" style="color: #8A6A2E; font-weight: 700">In review</span></div>
+<div class="dash-row"><span style="font-weight: 700">2-bed rental, Mirpur</span><span>—</span><span>—</span><span class="dash-status" style="color: #5D6A63; font-weight: 700">Draft</span></div>
+<div style="margin-top: 16px; padding: 14px 16px; border-radius: 10px; background: #F7F8F5; display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 14px">
+<span><strong>Next viewing:</strong> Sat, 2 Nov · 4:00 pm · Dhanmondi</span>
+<span style="font-weight: 700; color: #1D6B52">Confirm</span>
+</div>
+</div>
+</div>
+</section>
+
+<section class="wrap" aria-labelledby="svc-title" style="padding-top: 96px; padding-bottom: 32px">
+<div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; max-width: 720px">
+<p class="kicker">Property services</p>
+<h2 id="svc-title" class="h2 sv">Help beyond the listing</h2>
+<p class="lead" style="font-size: 16px">Some services come from the Grihova team. Others are delivered by independent professionals we refer you to — each one is labelled.</p>
+</div>
+<div class="svc-grid">
+<div class="blobbed" style="background: #123D32; color: #FFFFFF; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 18px">
+<p style="margin: 0; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #C6A66B">From the Grihova team</p>
+<div style="display: flex; flex-direction: column; gap: 4px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,.14)">
+<h3 style="margin: 0; font-size: 18px; font-weight: 800">Viewing assistance</h3>
+<p style="margin: 0; font-size: 15px; color: #C9D8CF">We coordinate times with the lister and remind both sides the day before.</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,.14)">
+<h3 style="margin: 0; font-size: 18px; font-weight: 800">Document-review coordination</h3>
+<p style="margin: 0; font-size: 15px; color: #C9D8CF">We collect the papers you need and pass them to a lawyer you choose. We don’t give legal opinions ourselves.</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h3 style="margin: 0; font-size: 18px; font-weight: 800">Rental listing support</h3>
+<p style="margin: 0; font-size: 15px; color: #C9D8CF">Help for landlords writing a clear listing and screening inquiries.</p>
+</div>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #E3E9E4; border-radius: 16px; padding: 28px">
+<p style="margin: 0 0 6px; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #8A6A2E">Through partner professionals</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); column-gap: 32px">
+<div style="padding: 16px 0; border-bottom: 1px solid #EDF1EE"><h3 style="margin: 0 0 4px; font-size: 16px; font-weight: 800">Legal assistance</h3><p style="margin: 0; font-size: 14px; color: #5D6A63">Title search and deed review by qualified property lawyers.</p></div>
+<div style="padding: 16px 0; border-bottom: 1px solid #EDF1EE"><h3 style="margin: 0 0 4px; font-size: 16px; font-weight: 800">Property valuation</h3><p style="margin: 0; font-size: 14px; color: #5D6A63">Referrals to independent valuers for sale or bank loans.</p></div>
+<div style="padding: 16px 0; border-bottom: 1px solid #EDF1EE"><h3 style="margin: 0 0 4px; font-size: 16px; font-weight: 800">Land survey</h3><p style="margin: 0; font-size: 14px; color: #5D6A63">Boundary and measurement surveys before you buy land.</p></div>
+<div style="padding: 16px 0; border-bottom: 1px solid #EDF1EE"><h3 style="margin: 0 0 4px; font-size: 16px; font-weight: 800">Property management</h3><p style="margin: 0; font-size: 14px; color: #5D6A63">Tenant handling and upkeep for owners living elsewhere.</p></div>
+<div style="padding: 16px 0"><h3 style="margin: 0 0 4px; font-size: 16px; font-weight: 800">Construction &amp; renovation</h3><p style="margin: 0; font-size: 14px; color: #5D6A63">Contractors for repairs, extensions and fit-outs.</p></div>
+<div style="padding: 16px 0"><h3 style="margin: 0 0 4px; font-size: 16px; font-weight: 800">Interior design</h3><p style="margin: 0; font-size: 14px; color: #5D6A63">Designers for new flats and commercial spaces.</p></div>
+</div>
+<p style="margin: 14px 0 0; font-size: 13px; color: #5D6A63">Partners are independent businesses responsible for their own work and fees. A listing on Grihova does not mean its title has been cleared.</p>
+</div>
+</div>
+</section>
+
+<section class="wrap" aria-labelledby="guide-title" style="padding-top: 96px; padding-bottom: 96px">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 32px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<p class="kicker">Property Guide</p>
+<h2 id="guide-title" class="h2 sv">Learn before you buy</h2>
+</div>
+<a class="tlink" href="Guide.dc.html">All guides<svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+<div class="guide-grid">
+<article class="card" style="display: flex; flex-direction: column; border-radius: 14px; overflow: hidden; background: #FFFFFF; border: 1px solid #E3E9E4">
+<div class="ph" style="aspect-ratio: 16 / 9; background-color: #CFCAB0"><div class="ph-zoom"></div><span class="ph-label">Photo · land parcel with boundary pillars</span></div>
+<div style="padding: 24px; display: flex; flex-direction: column; gap: 10px">
+<p style="margin: 0; font-size: 13px; font-weight: 700; color: #1D6B52">Land · 9 min read</p>
+<h3 style="margin: 0; font-size: 24px; line-height: 1.2; font-weight: 800; letter-spacing: -0.02em"><a class="stretch" href="Guide.dc.html">Questions to ask before purchasing land</a></h3>
+<p style="margin: 0; font-size: 15px; color: #5D6A63">Khatian records, mutation, tax receipts and site visits: what to ask the seller, and what to hand to your lawyer.</p>
+</div>
+</article>
+<div style="display: flex; flex-direction: column">
+<a class="row-link" href="Guide.dc.html" style="text-decoration: none; padding: 18px 0"><span style="flex: 1"><span style="display: block; font-size: 13px; font-weight: 700; color: #5D6A63">Apartments · 7 min</span><span class="rl-title" style="display: block; font-size: 17px; font-weight: 800; transition: color .2s">What to consider before buying an apartment</span></span><svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true" style="margin-top: 12px"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<a class="row-link" href="Guide.dc.html" style="text-decoration: none; padding: 18px 0"><span style="flex: 1"><span style="display: block; font-size: 13px; font-weight: 700; color: #5D6A63">Viewings · 5 min</span><span class="rl-title" style="display: block; font-size: 17px; font-weight: 800; transition: color .2s">Preparing for a property viewing</span></span><svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true" style="margin-top: 12px"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<a class="row-link" href="Guide.dc.html" style="text-decoration: none; padding: 18px 0"><span style="flex: 1"><span style="display: block; font-size: 13px; font-weight: 700; color: #5D6A63">Floor plans · 6 min</span><span class="rl-title" style="display: block; font-size: 17px; font-weight: 800; transition: color .2s">Understanding apartment sizes: carpet, built-up and saleable area</span></span><svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true" style="margin-top: 12px"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<a class="row-link" href="Guide.dc.html" style="text-decoration: none; padding: 18px 0"><span style="flex: 1"><span style="display: block; font-size: 13px; font-weight: 700; color: #5D6A63">Renting · 5 min</span><span class="rl-title" style="display: block; font-size: 17px; font-weight: 800; transition: color .2s">How to compare rental properties</span></span><svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true" style="margin-top: 12px"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<a class="row-link" href="Guide.dc.html" style="text-decoration: none; padding: 18px 0; border-bottom: 1px solid #E3E9E4"><span style="flex: 1"><span style="display: block; font-size: 13px; font-weight: 700; color: #5D6A63">Payments · 6 min</span><span class="rl-title" style="display: block; font-size: 17px; font-weight: 800; transition: color .2s">What to check before making a booking payment</span></span><svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="2" aria-hidden="true" style="margin-top: 12px"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<p style="margin: 16px 0 0; font-size: 13px; color: #5D6A63">Guides are general information, not legal advice. Talk to a qualified professional about your own transaction.</p>
+</div>
+</div>
+</section>
+</main>
+
+<footer id="contact" class="foot blobbed" style="background: #123D32; color: #FFFFFF">
+<div class="wrap" style="padding-top: 72px; padding-bottom: 32px">
+<div class="foot-grid">
+<div class="foot-brand" style="display: flex; flex-direction: column; gap: 16px; max-width: 340px">
+<a href="#top" aria-label="Grihova home" style="display: flex; align-items: center; gap: 10px; color: #FFFFFF; text-decoration: none">
+<svg width="34" height="34" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#FFFFFF"></rect><path d="M23 14.2 16 8.4 9 14.2V24h14v-5.6" fill="none" stroke="#123D32" stroke-width="2.4" stroke-linecap="square"></path><path d="M23 18.4h-5.6" fill="none" stroke="#C6A66B" stroke-width="2.4" stroke-linecap="square"></path></svg>
+<span style="font-size: 22px; font-weight: 800; letter-spacing: -0.03em">Grihova</span>
+</a>
+<p style="margin: 0; font-size: 15px; color: #C9D8CF">A property platform for Bangladesh — homes, land and commercial space, with clear listing information and honest labels.</p>
+<p style="margin: 0; font-size: 14px; color: #C9D8CF">Help: [SUPPORT PHONE] · [SUPPORT EMAIL]</p>
+<div style="display: flex; gap: 16px; font-size: 14px; font-weight: 700"><a href="#contact">Facebook</a><a href="#contact">YouTube</a><a href="#contact">LinkedIn</a></div>
+</div>
+<nav aria-label="Property" style="display: flex; flex-direction: column; gap: 10px; font-size: 14px">
+<p style="margin: 0 0 4px; font-size: 13px; font-weight: 800; color: #C6A66B; letter-spacing: .04em; text-transform: uppercase">Property</p>
+<a href="Results.dc.html">Buy</a><a href="Results.dc.html">Rent</a><a href="Results.dc.html">Land &amp; plots</a><a href="Results.dc.html">Commercial</a><a href="#developers">New projects</a>
+</nav>
+<nav aria-label="Popular locations" style="display: flex; flex-direction: column; gap: 10px; font-size: 14px">
+<p style="margin: 0 0 4px; font-size: 13px; font-weight: 800; color: #C6A66B; letter-spacing: .04em; text-transform: uppercase">Locations</p>
+<a href="Results.dc.html">Dhaka</a><a href="Results.dc.html">Chattogram</a><a href="Results.dc.html">Sylhet</a><a href="Results.dc.html">Feni</a><a href="Results.dc.html">Khulna</a>
+</nav>
+<nav aria-label="For professionals" style="display: flex; flex-direction: column; gap: 10px; font-size: 14px">
+<p style="margin: 0 0 4px; font-size: 13px; font-weight: 800; color: #C6A66B; letter-spacing: .04em; text-transform: uppercase">Professionals</p>
+<a href="ListProperty.dc.html">List your property</a><a href="#developers">Developer solutions</a><a href="#developers">Agent profiles</a><a href="Guide.dc.html">Property Guide</a>
+</nav>
+<nav aria-label="Company" style="display: flex; flex-direction: column; gap: 10px; font-size: 14px">
+<p style="margin: 0 0 4px; font-size: 13px; font-weight: 800; color: #C6A66B; letter-spacing: .04em; text-transform: uppercase">Company</p>
+<a href="#contact">About us</a><a href="#contact">Contact</a><a href="#contact">Help Center</a><a href="#contact">Terms</a><a href="#contact">Privacy</a><a href="Property.dc.html">Listing &amp; verification policy</a>
+</nav>
+</div>
+<div style="margin-top: 56px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.14); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 13px; color: #A9BFB2">
+<span>© 2026 Grihova. All listings in this prototype are sample data, not current inventory.</span>
+<span>Prices in Bangladeshi taka (৳). Areas in square feet.</span>
+</div>
+</div>
+</footer>
+
+<sc-if value="{{loginOpen}}" hint-placeholder-val="{{ false }}">
+<div style="position: fixed; inset: 0; z-index: 100; background: rgba(18,61,50,.34); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 16px">
+<div class="rise" role="dialog" aria-modal="true" aria-labelledby="login-title" style="width: 100%; max-width: 420px; background: #FFFFFF; border-radius: 16px; padding: 28px; box-shadow: 0 30px 80px rgba(18,61,50,.25)">
+<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px">
+<h2 id="login-title" style="margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.02em">Log in to Grihova</h2>
+<button class="iconbtn" type="button" aria-label="Close" onClick="{{closeLogin}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg></button>
+</div>
+<p style="margin: 0 0 20px; font-size: 14px; color: #5D6A63">See saved properties, inquiries and your listings.</p>
+<form onSubmit="{{submitLogin}}" style="display: flex; flex-direction: column; gap: 14px">
+<div><label class="lbl" for="l-phone">Mobile number or email</label><input id="l-phone" class="input" autocomplete="username"></div>
+<div><label class="lbl" for="l-pass">Password</label><input id="l-pass" class="input" type="password" autocomplete="current-password"></div>
+<button class="btn btn-primary" type="submit" style="width: 100%; height: 50px">Log In</button>
+<div aria-live="polite">
+<sc-if value="{{loginTried}}" hint-placeholder-val="{{ false }}">
+<p style="margin: 0; padding: 12px 14px; border-radius: 10px; background: #FBF6EC; font-size: 14px; color: #5E4A22">Sign-in isn’t connected in this prototype, so no account was opened.</p>
+</sc-if>
+</div>
+</form>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":8600}}'>
+var LISTINGS = [
+  {id:1, title:'South-facing 4-bed apartment, Road 71', area:'Gulshan 2', city:'Dhaka', type:'Apartment', deal:'sale', price:64000000, sqft:2650, beds:4, baths:4, verify:'Owner identity checked', tone:'#B7C6BC', photo:'apartment tower exterior'},
+  {id:2, title:'3-bed apartment near Rabindra Sarobar', area:'Dhanmondi', city:'Dhaka', type:'Apartment', deal:'sale', price:29500000, sqft:1780, beds:3, baths:3, verify:'Owner identity checked', tone:'#D6CBB4', photo:'living room, lake-side balcony'},
+  {id:3, title:'Ready flat with lake view, Block G', area:'Bashundhara R/A', city:'Dhaka', type:'Apartment', deal:'sale', price:14800000, sqft:1450, beds:3, baths:3, verify:'', tone:'#C3CEC7', photo:'facade with balconies'},
+  {id:4, title:'Family apartment, Sector 13', area:'Uttara', city:'Dhaka', type:'Apartment', deal:'rent', price:45000, sqft:1600, beds:3, baths:3, verify:'Owner identity checked', tone:'#CFC6B3', photo:'bright bedroom'},
+  {id:5, title:'2-bed flat near Mirpur 10 metro station', area:'Mirpur', city:'Dhaka', type:'Apartment', deal:'rent', price:26000, sqft:1100, beds:2, baths:2, verify:'', tone:'#BFCAC2', photo:'residential street facade'},
+  {id:6, title:'5 katha residential plot, Sector 22', area:'Purbachal', city:'Dhaka', type:'Plot/Land', deal:'sale', price:18500000, sqft:3600, land:'5 katha', verify:'', tone:'#D2CFAF', photo:'open plot with boundary wall'},
+  {id:7, title:'Hillside duplex house with garden', area:'Khulshi', city:'Chattogram', type:'House', deal:'sale', price:42000000, sqft:3400, beds:5, baths:5, verify:'Owner identity checked', tone:'#A9BDB0', photo:'two-storey house among trees'},
+  {id:8, title:'Open-plan office floor', area:'Agrabad', city:'Chattogram', type:'Office', deal:'rent', price:160000, sqft:1900, verify:'', tone:'#C2C7C4', photo:'office floor with glazing'},
+  {id:9, title:'Corner shop on Trunk Road', area:'Feni Sadar', city:'Feni', type:'Shop', deal:'rent', price:35000, sqft:420, verify:'Owner identity checked', tone:'#D9CCB6', photo:'ground-floor shopfront'},
+  {id:10, title:'3-bed apartment off Zindabazar', area:'Zindabazar', city:'Sylhet', type:'Apartment', deal:'sale', price:9500000, sqft:1350, beds:3, baths:2, verify:'', tone:'#B9C9BF', photo:'apartment block, green setting'},
+  {id:11, title:'Serviced studio apartment, Kolatoli', area:'Kolatoli', city:"Cox's Bazar", type:'Apartment', deal:'sale', price:5800000, sqft:620, beds:1, baths:1, verify:'', tone:'#CFD6CF', photo:'studio with sea-facing window'},
+  {id:12, title:'8 decimal land near Mohipal', area:'Mohipal', city:'Feni', type:'Plot/Land', deal:'sale', price:4800000, sqft:3485, land:'8 decimal', verify:'', tone:'#D5CFB0', photo:'roadside land parcel'},
+  {id:13, title:'Furnished 3-bed apartment, Road 11', area:'Banani', city:'Dhaka', type:'Apartment', deal:'rent', price:135000, sqft:2100, beds:3, baths:4, verify:'Owner identity checked', tone:'#C8C1AE', photo:'furnished living and dining'},
+  {id:14, title:'Ground-floor shop, Kandirpar', area:'Kandirpar', city:'Cumilla', type:'Shop', deal:'sale', price:7200000, sqft:380, verify:'', tone:'#CBC9BC', photo:'market-street shopfront'},
+  {id:15, title:'Two-storey family house', area:'Upashahar', city:'Rajshahi', type:'House', deal:'sale', price:16500000, sqft:2800, beds:4, baths:3, verify:'', tone:'#B4C3B6', photo:'brick house with courtyard'},
+  {id:16, title:'2-bed apartment, Sonadanga', area:'Sonadanga', city:'Khulna', type:'Apartment', deal:'rent', price:18000, sqft:1050, beds:2, baths:2, verify:'', tone:'#C6CDC4', photo:'apartment balcony view'}
+];
+var FEATURED = [1, 2, 7, 4, 6, 13];
+var LOCS = ['dhaka','gulshan','banani','dhanmondi','bashundhara r/a','bashundhara','uttara','mirpur','purbachal','chattogram','khulshi','agrabad','feni','sylhet','khulna','rajshahi','cumilla',"cox's bazar"];
+var COMMERCIAL = ['Office', 'Shop'];
+
+function indian(n) {
+  var s = String(Math.round(n));
+  if (s.length <= 3) return s;
+  var last = s.slice(-3), rest = s.slice(0, -3);
+  return rest.replace(/\B(?=(\d{2})+(?!\d))/g, ',') + ',' + last;
+}
+function crore(n) {
+  if (n >= 10000000) { var v = n / 10000000; return '৳' + String(Math.round(v * 100) / 100) + ' Cr'; }
+  if (n >= 100000) { var w = n / 100000; return '৳' + String(Math.round(w * 10) / 10) + ' Lakh'; }
+  return '৳' + indian(n);
+}
+function priceLabel(l) { return l.deal === 'rent' ? '৳' + indian(l.price) + '/mo' : crore(l.price); }
+function budgetLabel(n, rent) { return rent ? '৳' + indian(n) + '/mo' : crore(n); }
+function isCommercial(l) { return COMMERCIAL.indexOf(l.type) >= 0; }
+function matches(l, q) {
+  if (q.deal === 'buy' && !(l.deal === 'sale' && !isCommercial(l))) return false;
+  if (q.deal === 'rent' && !(l.deal === 'rent' && !isCommercial(l))) return false;
+  if (q.deal === 'commercial') {
+    if (!isCommercial(l)) return false;
+    if (q.comDeal === 'buy' && l.deal !== 'sale') return false;
+    if (q.comDeal === 'rent' && l.deal !== 'rent') return false;
+  }
+  if (q.type && q.type !== 'any' && l.type !== q.type) return false;
+  if (q.loc) {
+    var hay = (l.area + ' ' + l.city).toLowerCase();
+    if (hay.indexOf(q.loc.toLowerCase().replace(' r/a', '')) < 0) return false;
+  }
+  if (q.min && l.price < Number(q.min)) return false;
+  if (q.max && l.price > Number(q.max)) return false;
+  return true;
+}
+function summary(q) {
+  var parts = [];
+  if (q.deal === 'buy') parts.push('To buy');
+  else if (q.deal === 'rent') parts.push('To rent');
+  else if (q.deal === 'commercial') parts.push(q.comDeal === 'buy' ? 'Commercial, to buy' : q.comDeal === 'rent' ? 'Commercial, to rent' : 'Commercial');
+  else parts.push('All listings');
+  if (q.type && q.type !== 'any') parts.push(q.type === 'Plot/Land' ? 'Plot / Land' : q.type);
+  if (q.loc) parts.push(q.loc);
+  var rent = q.deal === 'rent' || (q.deal === 'commercial' && q.comDeal === 'rent');
+  if (q.min && q.max) parts.push(budgetLabel(Number(q.min), rent) + ' – ' + budgetLabel(Number(q.max), rent));
+  else if (q.min) parts.push('from ' + budgetLabel(Number(q.min), rent));
+  else if (q.max) parts.push('up to ' + budgetLabel(Number(q.max), rent));
+  return parts.join(' · ') + ' — from sample data.';
+}
+function phoneOk(p) {
+  var d = String(p || '').replace(/\D/g, '');
+  if (d.indexOf('880') === 0) d = d.slice(3);
+  if (d.indexOf('0') === 0) d = d.slice(1);
+  return /^1[3-9]\d{8}$/.test(d);
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      deal: 'buy', comDeal: 'rent', type: 'any', loc: '', min: '', max: '', err: '', errField: '',
+      applied: null, showSaved: false, saved: [2, 7],
+      menuOpen: false, loginOpen: false, loginTried: false,
+      req: { mode: 'buy', area: '', type: 'Apartment', budget: '', beds: '', name: '', phone: '', consent: false },
+      reqErr: {}, reqDone: false
+    };
+  }
+  scrollTo(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  }
+  applyQuery(q) {
+    var self = this;
+    this.setState({ applied: q, showSaved: false, menuOpen: false }, function () { self.scrollTo('listings'); });
+  }
+  setDeal(d, extra) {
+    var next = { deal: d, min: '', max: '', err: '', errField: '', menuOpen: false };
+    if (extra) for (var k in extra) next[k] = extra[k];
+    this.setState(next);
+  }
+  card(l) {
+    var self = this;
+    var saved = this.state.saved.indexOf(l.id) >= 0;
+    var specs = l.beds ? (l.beds + ' bed · ' + l.baths + ' bath · ' + indian(l.sqft) + ' sqft') : (l.land ? (l.land + ' · ' + indian(l.sqft) + ' sqft') : (indian(l.sqft) + ' sqft'));
+    return {
+      id: l.id, title: l.title, place: l.area + ', ' + l.city, type: l.type === 'Plot/Land' ? 'Plot / Land' : l.type,
+      status: l.deal === 'rent' ? 'For Rent' : 'For Sale', priceLabel: priceLabel(l), specs: specs,
+      verify: l.verify, hasVerify: !!l.verify, tone: l.tone, photo: l.photo,
+      saved: saved, saveCls: saved ? 'on' : '', heartFill: saved ? 'currentColor' : 'none',
+      saveLabel: saved ? 'Remove ' + l.title + ' from saved' : 'Save ' + l.title,
+      toggle: function () {
+        var s = self.state.saved.slice();
+        var i = s.indexOf(l.id);
+        if (i >= 0) s.splice(i, 1); else s.push(l.id);
+        self.setState({ saved: s });
+      }
+    };
+  }
+  renderVals() {
+    var self = this, s = this.state;
+    var list, heading, sub, emptyTitle = '', emptyBody = '';
+    if (s.showSaved) {
+      list = LISTINGS.filter(function (l) { return s.saved.indexOf(l.id) >= 0; });
+      heading = 'Saved properties';
+      sub = list.length ? list.length + ' saved on this device. Log in to keep them across devices.' : 'Nothing saved yet.';
+      emptyTitle = 'You haven’t saved anything yet';
+      emptyBody = 'Tap the heart on any listing to keep it here while you compare.';
+    } else if (s.applied) {
+      list = LISTINGS.filter(function (l) { return matches(l, s.applied); });
+      heading = list.length + (list.length === 1 ? ' listing matches' : ' listings match') + ' your search';
+      sub = summary(s.applied);
+      emptyTitle = 'No sample listings match that search';
+      emptyBody = 'Try a wider budget or a nearby area — or tell us what you need and we’ll look for it.';
+    } else {
+      list = FEATURED.map(function (id) { return LISTINGS.filter(function (l) { return l.id === id; })[0]; });
+      heading = 'Properties worth a closer look';
+      sub = 'A hand-picked set from the sample listings, chosen for complete details and clear photos.';
+    }
+    var count = function (fn) { var n = LISTINGS.filter(fn).length; return n + (n === 1 ? ' sample listing' : ' sample listings'); };
+    var cats = [
+      { name: 'Apartments', cls: 'cat-a', tone: '#B8C7BD', photo: 'apartment building, Dhaka', count: count(function (l) { return l.type === 'Apartment'; }), go: function () { self.applyQuery({ deal: 'any', type: 'Apartment' }); } },
+      { name: 'Houses', cls: '', tone: '#C9C2AE', photo: 'family house', count: count(function (l) { return l.type === 'House'; }), go: function () { self.applyQuery({ deal: 'any', type: 'House' }); } },
+      { name: 'Land & plots', cls: '', tone: '#D3CFB2', photo: 'plot with boundary', count: count(function (l) { return l.type === 'Plot/Land'; }), go: function () { self.applyQuery({ deal: 'any', type: 'Plot/Land' }); } },
+      { name: 'Rental homes', cls: '', tone: '#C4CEC6', photo: 'furnished flat interior', count: count(function (l) { return l.deal === 'rent' && !isCommercial(l); }), go: function () { self.applyQuery({ deal: 'rent' }); } },
+      { name: 'Commercial spaces', cls: '', tone: '#BFC6C2', photo: 'office and shopfront', count: count(isCommercial), go: function () { self.applyQuery({ deal: 'commercial', comDeal: 'any' }); } }
+    ];
+    var cityCount = function (c) { var n = LISTINGS.filter(function (l) { return l.city === c; }).length; return n + (n === 1 ? ' sample listing' : ' sample listings'); };
+    var locs = [
+      { en: 'Dhaka', bn: 'ঢাকা', desc: 'Gulshan, Banani, Dhanmondi, Uttara, Bashundhara and more' },
+      { en: 'Chattogram', bn: 'চট্টগ্রাম', desc: 'Port city — Khulshi, Agrabad, Nasirabad' },
+      { en: 'Sylhet', bn: 'সিলেট', desc: 'Divisional city in the north-east' },
+      { en: 'Feni', bn: 'ফেনী', desc: 'District town on the Dhaka–Chattogram highway' },
+      { en: 'Cumilla', bn: 'কুমিল্লা', desc: 'On the Dhaka–Chattogram corridor' },
+      { en: 'Khulna', bn: 'খুলনা', desc: 'South-west divisional city near the Sundarbans' },
+      { en: 'Rajshahi', bn: 'রাজশাহী', desc: 'Riverside city on the Padma' },
+      { en: "Cox's Bazar", bn: 'কক্সবাজার', desc: 'Holiday apartments along the coast' }
+    ].map(function (c) { return { en: c.en, bn: c.bn, desc: c.desc, count: cityCount(c.en), go: function () { self.applyQuery({ deal: 'any', loc: c.en }); } }; });
+    var hoods = ['Gulshan', 'Banani', 'Dhanmondi', 'Uttara', 'Bashundhara', 'Mirpur', 'Purbachal'].map(function (h) {
+      return { name: h, go: function () { self.applyQuery({ deal: 'any', loc: h }); } };
+    });
+
+    var r = s.req, re = s.reqErr;
+    var upd = function (k, checkbox) { return function (e) { var n = {}; for (var x in self.state.req) n[x] = self.state.req[x]; n[k] = checkbox ? e.target.checked : e.target.value; self.setState({ req: n }); }; };
+    var setMode = function (m) { return function () { var n = {}; for (var x in self.state.req) n[x] = self.state.req[x]; n.mode = m; n.budget = ''; self.setState({ req: n }); }; };
+    var saleBudget = s.deal === 'buy' || (s.deal === 'commercial' && s.comDeal === 'buy');
+
+    return {
+      savedCount: s.saved.length, savedAria: 'Saved properties, ' + s.saved.length + ' saved',
+      menuOpen: s.menuOpen, toggleMenu: function () { self.setState({ menuOpen: !self.state.menuOpen }); },
+      loginOpen: s.loginOpen, loginTried: s.loginTried,
+      openLogin: function () { self.setState({ loginOpen: true, loginTried: false, menuOpen: false }); },
+      closeLogin: function () { self.setState({ loginOpen: false }); },
+      submitLogin: function (e) { e.preventDefault(); self.setState({ loginTried: true }); },
+      openSaved: function () { self.setState({ showSaved: true, menuOpen: false }, function () { self.scrollTo('listings'); }); },
+      navBuy: function () { self.setDeal('buy', { type: 'any' }); },
+      navRent: function () { self.setDeal('rent', { type: 'any' }); },
+      navLand: function () { self.setDeal('buy', { type: 'Plot/Land' }); },
+      navCom: function () { self.setDeal('commercial', { type: 'any' }); },
+      isBuy: s.deal === 'buy', isRent: s.deal === 'rent', isCom: s.deal === 'commercial',
+      dealBuy: function () { self.setDeal('buy'); }, dealRent: function () { self.setDeal('rent'); }, dealCom: function () { self.setDeal('commercial'); },
+      comDeal: s.comDeal, setComDeal: function (e) { self.setState({ comDeal: e.target.value, min: '', max: '', err: '' }); },
+      type: s.type, setType: function (e) { self.setState({ type: e.target.value }); },
+      loc: s.loc, setLoc: function (e) { self.setState({ loc: e.target.value, err: '', errField: '' }); },
+      min: s.min, max: s.max,
+      setMin: function (e) { self.setState({ min: e.target.value, err: '', errField: '' }); },
+      setMax: function (e) { self.setState({ max: e.target.value, err: '', errField: '' }); },
+      saleBudget: saleBudget, rentBudget: !saleBudget,
+      err: s.err, hasErr: !!s.err, locInvalid: s.errField === 'loc', budgetInvalid: s.errField === 'budget',
+      submitSearch: function (e) {
+        e.preventDefault();
+        var st = self.state, loc = st.loc.trim();
+        if (loc && LOCS.indexOf(loc.toLowerCase()) < 0) { self.setState({ err: 'We couldn’t find “' + loc + '”. Choose an area or city from the list.', errField: 'loc' }); return; }
+        if (st.min && st.max && Number(st.min) > Number(st.max)) { self.setState({ err: 'The minimum price is higher than the maximum. Adjust one of them.', errField: 'budget' }); return; }
+        self.setState({ err: '', errField: '' });
+        self.applyQuery({ deal: st.deal, comDeal: st.comDeal, type: st.type, loc: loc, min: st.min, max: st.max });
+      },
+      listHeading: heading, listSub: sub, cards: list.map(function (l) { return self.card(l); }),
+      isFiltered: !!s.applied || s.showSaved, isEmpty: list.length === 0, emptyTitle: emptyTitle, emptyBody: emptyBody,
+      clearSearch: function () { self.setState({ applied: null, showSaved: false }); },
+      cats: cats, locs: locs, hoods: hoods,
+
+      req: r, e: re, has: { area: !!re.area, budget: !!re.budget, name: !!re.name, phone: !!re.phone, consent: !!re.consent },
+      reqBuy: r.mode === 'buy', reqRent: r.mode === 'rent', reqModeBuy: setMode('buy'), reqModeRent: setMode('rent'),
+      reqBudgetLabel: r.mode === 'rent' ? 'Max rent per month' : 'Budget up to',
+      reqBudgetHint: r.mode === 'rent' ? 'e.g. ৳40,000' : 'e.g. ৳1.5 Cr',
+      rqArea: upd('area'), rqType: upd('type'), rqBudget: upd('budget'), rqBeds: upd('beds'), rqName: upd('name'), rqPhone: upd('phone'), rqConsent: upd('consent', true),
+      reqDone: s.reqDone, reqOpen: !s.reqDone,
+      reqFirstName: (r.name || '').trim().split(' ')[0],
+      reqSummary: (r.mode === 'rent' ? 'Rent' : 'Buy') + ' · ' + (r.type === 'Plot/Land' ? 'Plot / Land' : r.type) + ' · ' + r.area + ' · ' + r.budget + (r.beds ? ' · ' + r.beds + '+ bedrooms' : '') + ' · +880 ' + r.phone,
+      submitReq: function (e) {
+        e.preventDefault();
+        var q = self.state.req, er = {};
+        if (!q.area.trim()) er.area = 'Add the area you prefer.';
+        if (!q.budget.trim()) er.budget = 'Add a budget so we can filter matches.';
+        if (q.name.trim().length < 2) er.name = 'Add your name.';
+        if (!phoneOk(q.phone)) er.phone = 'Enter an 11-digit Bangladeshi mobile number, e.g. 01712 345678.';
+        if (!q.consent) er.consent = 'We need your permission to contact you about matches.';
+        self.setState({ reqErr: er, reqDone: Object.keys(er).length === 0 });
+      },
+      reqReset: function () { self.setState({ reqDone: false }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# Only the website is tracked; everything else in this folder stays private.
+*
+!.gitignore
+!index.html
+!Main.dc.html
+!Main.bn.html
+!support.js
+!README.md
+!vendor/
+!vendor/react.js
+!vendor/react-dom.js
