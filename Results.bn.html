@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>প্রপার্টি খুঁজুন — Grihova</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./listings.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Noto+Sans+Bengali:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles.css">
+<style>
+.filters{position:relative;z-index:5;border-radius:18px;padding:18px 20px 20px}
+.f-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) minmax(0,.9fr) minmax(0,.9fr) minmax(0,.8fr);gap:12px;align-items:end}
+.f-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.toggle{display:inline-flex;align-items:center;gap:10px;min-height:40px;font-size:14px;font-weight:700;color:#33403A;cursor:pointer}
+.toggle input{width:20px;height:20px;margin:0;accent-color:#1D6B52}
+.bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin:36px 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.fchip{display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:0 8px 0 12px;border-radius:999px;border:1px solid rgba(29,107,82,.25);background:rgba(232,240,234,.75);font-family:inherit;font-size:13px;font-weight:700;color:#123D32;cursor:pointer}
+.fchip:hover{background:#E8F0EA;border-color:#1D6B52}
+.fchip svg{opacity:.7}
+.linkbtn{border:0;background:transparent;padding:6px 4px;font-family:inherit;font-size:14px;font-weight:700;color:#1D6B52;cursor:pointer;text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(29,107,82,.35)}
+.r-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:24px}
+@media (max-width:1060px){.f-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.f-grid{grid-template-columns:minmax(0,1fr)}.filters{padding:16px}}
+/* Bangla typography */
+.g-root{font-family:'Manrope','Noto Sans Bengali',system-ui,sans-serif;line-height:1.65}
+.g-root *{letter-spacing:0 !important}
+.g-root h1{line-height:1.3 !important}
+</style>
+</helmet>
+<div class="g-root" id="top" style="min-height: 100%">
+<div class="aurora" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<div style="background: #E8F0EA; border-bottom: 1px solid #DCE6DF">
+<div class="wrap" style="display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 38px; font-size: 13px; font-weight: 600; color: #2E4A3F; text-align: center">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5M12 16h.01"></path></svg>
+<span>{{t.banner}}</span>
+</div>
+</div>
+
+<header class="site-header" style="position: sticky; top: 0; z-index: 50">
+<div class="wrap" style="display: flex; align-items: center; gap: 20px; height: 72px">
+<a href="{{home}}" aria-label="{{t.homeAria}}" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #19231F; flex-shrink: 0">
+<svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#123D32"></rect><path d="M23 14.2 16 8.4 9 14.2V24h14v-5.6" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="square"></path><path d="M23 18.4h-5.6" fill="none" stroke="#C6A66B" stroke-width="2.4" stroke-linecap="square"></path></svg>
+<span style="font-size: 21px; font-weight: 800; letter-spacing: -0.03em">Grihova</span>
+</a>
+<nav class="nav-links" aria-label="{{t.primary}}" style="display: flex; align-items: center; gap: 2px; margin-left: 20px">
+<button class="navlink" type="button" style="border: 0; background: transparent; font-family: inherit; cursor: pointer" onClick="{{navBuy}}">{{t.buy}}</button>
+<button class="navlink" type="button" style="border: 0; background: transparent; font-family: inherit; cursor: pointer" onClick="{{navRent}}">{{t.rent}}</button>
+<button class="navlink" type="button" style="border: 0; background: transparent; font-family: inherit; cursor: pointer" onClick="{{navLand}}">{{t.land}}</button>
+<button class="navlink" type="button" style="border: 0; background: transparent; font-family: inherit; cursor: pointer" onClick="{{navCom}}">{{t.com}}</button>
+</nav>
+<div style="flex: 1"></div>
+<a class="iconbtn lang-switch glass" href="{{otherHref}}" hreflang="{{otherLang}}" lang="{{otherLang}}" title="{{t.otherTitle}}">{{t.otherLabel}}</a>
+<a class="btn btn-ghost hide-sm" href="{{home}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>{{t.homeBtn}}</a>
+</div>
+</header>
+
+<main class="wrap" style="padding-top: 32px; padding-bottom: 96px">
+<div class="rise" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; max-width: 720px">
+<p class="kicker">{{t.kicker}}</p>
+<h1 style="margin: 0; font-size: clamp(30px, 3.6vw, 44px); line-height: 1.1; font-weight: 800; letter-spacing: -0.035em">{{t.title}}</h1>
+</div>
+
+<form class="filters glass rise d1" role="search" aria-label="{{t.filtersAria}}" onSubmit="{{noSubmit}}">
+<div class="f-row">
+<div role="group" aria-label="{{t.dealAria}}" style="display: flex; flex-wrap: wrap; gap: 4px; padding: 4px; border-radius: 10px; background: rgba(232,240,234,.8)">
+<sc-for list="{{deals}}" as="d" hint-placeholder-count="4">
+<button class="tab" type="button" aria-pressed="{{d.on}}" onClick="{{d.go}}">{{d.label}}</button>
+</sc-for>
+</div>
+<label class="toggle"><input type="checkbox" checked="{{q.verified}}" onChange="{{setVerified}}">{{t.verifiedOnly}}</label>
+</div>
+<div class="f-grid">
+<div>
+<label class="lbl" for="r-type">{{t.type}}</label>
+<div class="sel"><select id="r-type" class="input" value="{{q.type}}" onChange="{{setType}}">
+<sc-for list="{{typeOpts}}" as="o" hint-placeholder-count="6"><option value="{{o.v}}">{{o.label}}</option></sc-for>
+</select><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div>
+</div>
+<div>
+<label class="lbl" for="r-loc">{{t.loc}}</label>
+<div style="position: relative">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="position: absolute; left: 14px; top: 16px; color: #5D6A63"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>
+<input id="r-loc" class="input" list="r-loc-list" autocomplete="off" placeholder="{{t.locHint}}" style="padding-left: 38px" value="{{q.loc}}" onChange="{{setLoc}}">
+<datalist id="r-loc-list"><sc-for list="{{places}}" as="pl" hint-placeholder-count="8"><option value="{{pl}}"></option></sc-for></datalist>
+</div>
+</div>
+<div>
+<label class="lbl" for="r-min">{{minLabel}}</label>
+<div class="sel"><select id="r-min" class="input" value="{{q.min}}" onChange="{{setMin}}" disabled="{{priceOff}}" aria-describedby="price-note">
+<sc-for list="{{minOpts}}" as="o" hint-placeholder-count="6"><option value="{{o.v}}">{{o.label}}</option></sc-for>
+</select><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div>
+</div>
+<div>
+<label class="lbl" for="r-max">{{maxLabel}}</label>
+<div class="sel"><select id="r-max" class="input" value="{{q.max}}" onChange="{{setMax}}" disabled="{{priceOff}}" aria-describedby="price-note">
+<sc-for list="{{maxOpts}}" as="o" hint-placeholder-count="6"><option value="{{o.v}}">{{o.label}}</option></sc-for>
+</select><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div>
+</div>
+<div>
+<label class="lbl" for="r-beds">{{t.beds}}</label>
+<div class="sel"><select id="r-beds" class="input" value="{{q.beds}}" onChange="{{setBeds}}">
+<sc-for list="{{bedOpts}}" as="o" hint-placeholder-count="5"><option value="{{o.v}}">{{o.label}}</option></sc-for>
+</select><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div>
+</div>
+</div>
+<p id="price-note" style="margin: 10px 0 0; font-size: 13px; color: #5D6A63">{{priceNote}}</p>
+</form>
+
+<div class="bar">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h2 class="h2" style="font-size: 26px" aria-live="polite">{{countLabel}}</h2>
+<sc-if value="{{hasChips}}" hint-placeholder-val="{{ false }}">
+<div class="chips">
+<sc-for list="{{chips}}" as="c" hint-placeholder-count="2">
+<button class="fchip" type="button" onClick="{{c.go}}" aria-label="{{c.aria}}">{{c.label}}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg></button>
+</sc-for>
+<button class="linkbtn" type="button" onClick="{{clearAll}}">{{t.clearAll}}</button>
+</div>
+</sc-if>
+</div>
+<div style="display: flex; align-items: center; gap: 10px">
+<label for="r-sort" style="font-size: 14px; font-weight: 700; color: #33403A">{{t.sort}}</label>
+<div class="sel"><select id="r-sort" class="input" style="height: 42px; width: 200px" value="{{q.sort}}" onChange="{{setSort}}">
+<sc-for list="{{sortOpts}}" as="o" hint-placeholder-count="4"><option value="{{o.v}}">{{o.label}}</option></sc-for>
+</select><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div>
+</div>
+</div>
+
+<sc-if value="{{isEmpty}}" hint-placeholder-val="{{ false }}">
+<div class="glass rise" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 36px; border-radius: 16px">
+<p style="margin: 0; font-size: 20px; font-weight: 800">{{t.emptyTitle}}</p>
+<p class="lead" style="font-size: 15px; max-width: 560px">{{t.emptyBody}}</p>
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<button class="btn btn-primary" type="button" onClick="{{clearAll}}">{{t.clearAll}}</button>
+<a class="btn btn-ghost" href="{{home}}#match">{{t.tellUs}}</a>
+</div>
+</div>
+</sc-if>
+
+<div class="r-grid">
+<sc-for list="{{cards}}" as="item" hint-placeholder-count="6">
+<article class="card" style="display: flex; flex-direction: column; background: #FFFFFF; border: 1px solid #E3E9E4; border-radius: 14px; overflow: hidden">
+<div class="ph" style="aspect-ratio: 4 / 3; background-color: {{item.tone}}">
+<div class="ph-zoom"></div>
+<span class="ph-label">{{t.photo}} · {{item.photo}}</span>
+<span class="chip glass" style="position: absolute; top: 12px; left: 12px">{{item.status}}</span>
+<button class="save glass {{item.saveCls}}" type="button" aria-pressed="{{item.saved}}" aria-label="{{item.saveLabel}}" onClick="{{item.toggle}}">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="{{item.heartFill}}" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"></path></svg>
+</button>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 18px 18px 16px; flex: 1">
+<p style="margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.02em">{{item.price}}</p>
+<h3 style="margin: 0; font-size: 16px; line-height: 1.35; font-weight: 700"><a class="stretch" href="{{item.href}}">{{item.title}}</a></h3>
+<p style="margin: 0; display: flex; align-items: center; gap: 6px; font-size: 14px; color: #5D6A63"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>{{item.place}}</p>
+<p style="margin: 4px 0 0; font-size: 14px; font-weight: 600; color: #33403A">{{item.specs}}</p>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 14px; border-top: 1px solid #EDF1EE; font-size: 13px">
+<span style="color: #5D6A63; font-weight: 600">{{item.type}}</span>
+<sc-if value="{{item.verified}}" hint-placeholder-val="{{ false }}">
+<span style="display: inline-flex; align-items: center; gap: 5px; color: #1D6B52; font-weight: 700"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 3l7 3v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6l7-3Z"></path><path d="m9 12 2 2 4-4"></path></svg>{{t.idChecked}}</span>
+</sc-if>
+</div>
+</div>
+</article>
+</sc-for>
+</div>
+<p style="margin: 24px 0 0; font-size: 13px; color: #5D6A63">{{t.note}}</p>
+</main>
+
+<footer class="foot blobbed" style="background: #123D32; color: #FFFFFF">
+<div class="wrap" style="padding-top: 40px; padding-bottom: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 13px; color: #A9BFB2">
+<span>{{t.footer}}</span>
+<a href="{{home}}">{{t.backHome}}</a>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2400}}'>
+var LANG = 'bn';
+var G = window.GRIHOVA;
+
+var T = {
+  en: {
+    banner: 'Design prototype. Listings and forms use sample data — nothing is sent or published.',
+    homeAria: 'Grihova home', primary: 'Primary', buy: 'Buy', rent: 'Rent', land: 'Land', com: 'Commercial', all: 'All',
+    otherLabel: 'বাংলা', otherTitle: 'বাংলা সংস্করণ', homeBtn: 'Home',
+    kicker: 'Search', title: 'Properties across Bangladesh', filtersAria: 'Filter properties', dealAria: 'Buy or rent',
+    verifiedOnly: 'Owner identity checked only', type: 'Property type', anyType: 'Any type',
+    loc: 'Location', locHint: 'Area or city, e.g. Dhanmondi',
+    minPrice: 'Min price', maxPrice: 'Max price', minRent: 'Min rent / month', maxRent: 'Max rent / month', noMin: 'No min', noMax: 'No max',
+    priceHint: 'Choose Buy or Rent to filter by price.', priceInfo: 'Prices in Bangladeshi taka (৳).',
+    beds: 'Bedrooms', anyBeds: 'Any',
+    sort: 'Sort by', newest: 'Newest first', priceLow: 'Price: low to high', priceHigh: 'Price: high to low', sizeBig: 'Size: largest first',
+    count1: '1 property', countN: '{n} properties', clearAll: 'Clear all filters', remove: 'Remove filter: {x}',
+    emptyTitle: 'No sample listings match these filters', emptyBody: 'Try removing a filter or widening your budget — or tell us what you need and we’ll look out for it.', tellUs: 'Tell us what you’re looking for',
+    photo: 'Photo', sale: 'For sale', rentTag: 'For rent', idChecked: 'Owner identity checked', save: 'Save {x}', unsave: 'Remove {x} from saved',
+    perMonth: '/mo', cr: ' Cr', lakh: ' Lakh', bed: ' bed', bath: ' bath', sqft: ' sqft', from: 'from {x}', upTo: 'up to {x}',
+    note: '“Owner identity checked” means the Grihova team matched the lister’s national ID to the ownership papers they showed us. It is not a title or legal clearance.',
+    footer: '© 2026 Grihova. Sample data, not current inventory.', backHome: 'Back to the homepage',
+    docTitle: 'Search properties — Grihova'
+  },
+  bn: {
+    banner: 'ডিজাইন প্রোটোটাইপ। লিস্টিং ও ফর্মে নমুনা তথ্য ব্যবহার করা হয়েছে — কিছুই পাঠানো বা প্রকাশ করা হয় না।',
+    homeAria: 'Grihova হোম', primary: 'প্রধান মেনু', buy: 'কিনুন', rent: 'ভাড়া', land: 'জমি', com: 'বাণিজ্যিক', all: 'সব',
+    otherLabel: 'English', otherTitle: 'English version', homeBtn: 'হোম',
+    kicker: 'অনুসন্ধান', title: 'সারা বাংলাদেশের প্রপার্টি', filtersAria: 'প্রপার্টি ফিল্টার', dealAria: 'কেনা বা ভাড়া',
+    verifiedOnly: 'শুধু মালিকের পরিচয় যাচাই করা', type: 'প্রপার্টির ধরন', anyType: 'যেকোনো ধরন',
+    loc: 'এলাকা', locHint: 'এলাকা বা শহর, যেমন ধানমন্ডি',
+    minPrice: 'সর্বনিম্ন দাম', maxPrice: 'সর্বোচ্চ দাম', minRent: 'সর্বনিম্ন ভাড়া / মাস', maxRent: 'সর্বোচ্চ ভাড়া / মাস', noMin: 'সীমা নেই', noMax: 'সীমা নেই',
+    priceHint: 'দাম দিয়ে ফিল্টার করতে “কিনুন” বা “ভাড়া” বেছে নিন।', priceInfo: 'দাম বাংলাদেশি টাকায় (৳)।',
+    beds: 'বেডরুম', anyBeds: 'যেকোনো',
+    sort: 'সাজান', newest: 'নতুন আগে', priceLow: 'দাম: কম থেকে বেশি', priceHigh: 'দাম: বেশি থেকে কম', sizeBig: 'আয়তন: বড় আগে',
+    count1: '১টি প্রপার্টি', countN: '{n}টি প্রপার্টি', clearAll: 'সব ফিল্টার মুছুন', remove: 'ফিল্টার সরান: {x}',
+    emptyTitle: 'এই ফিল্টারের সঙ্গে কোনো নমুনা লিস্টিং মেলেনি', emptyBody: 'একটি ফিল্টার সরিয়ে বা বাজেট বাড়িয়ে চেষ্টা করুন — অথবা কী দরকার জানান, আমরা খুঁজে দেখব।', tellUs: 'কী খুঁজছেন আমাদের জানান',
+    photo: 'ছবি', sale: 'বিক্রি', rentTag: 'ভাড়া', idChecked: 'মালিকের পরিচয় যাচাই করা', save: '{x} সংরক্ষণ করুন', unsave: '{x} সংরক্ষিত তালিকা থেকে সরান',
+    perMonth: '/মাস', cr: ' কোটি', lakh: ' লাখ', bed: ' বেড', bath: ' বাথ', sqft: ' বর্গফুট', from: '{x} থেকে', upTo: '{x} পর্যন্ত',
+    note: '“মালিকের পরিচয় যাচাই করা” মানে Grihova টিম লিস্টকারীর জাতীয় পরিচয়পত্র তাঁর দেখানো মালিকানার কাগজের সঙ্গে মিলিয়ে দেখেছে। এটি মালিকানা স্বত্ব বা আইনি ছাড়পত্র নয়।',
+    footer: '© ২০২৬ Grihova। নমুনা তথ্য, বর্তমান তালিকা নয়।', backHome: 'হোমপেজে ফিরে যান',
+    docTitle: 'প্রপার্টি খুঁজুন — Grihova'
+  }
+};
+var t = T[LANG];
+var PAGE = LANG === 'bn' ? 'Results.bn.html' : 'Results.dc.html';
+var OTHER = LANG === 'bn' ? 'Results.dc.html' : 'Results.bn.html';
+var PROPERTY = LANG === 'bn' ? 'Property.bn.html' : 'Property.dc.html';
+var HOME = LANG === 'bn' ? 'Main.bn.html' : 'Main.dc.html';
+var SAVE_KEY = 'grihova-saved';
+var COMMERCIAL = ['Office', 'Shop'];
+var SALE_STEPS = [2500000, 5000000, 7500000, 10000000, 15000000, 20000000, 30000000, 50000000, 100000000];
+var RENT_STEPS = [10000, 15000, 20000, 30000, 50000, 100000, 200000];
+var DEFAULTS = { deal: 'any', type: 'any', loc: '', min: '', max: '', beds: '', verified: false, sort: 'newest' };
+
+function num(x) { return LANG === 'bn' ? String(x).replace(/[0-9]/g, function (d) { return '০১২৩৪৫৬৭৮৯'[d]; }) : String(x); }
+function fill(s, o) { return s.replace(/\{(\w+)\}/g, function (m, k) { return o[k] != null ? o[k] : m; }); }
+function indian(n) {
+  var s = String(Math.round(n));
+  if (s.length <= 3) return s;
+  var last = s.slice(-3), rest = s.slice(0, -3);
+  return rest.replace(/\B(?=(\d{2})+(?!\d))/g, ',') + ',' + last;
+}
+function money(n) {
+  if (n >= 10000000) return '৳' + String(Math.round(n / 100000) / 100) + t.cr;
+  if (n >= 100000) return '৳' + String(Math.round(n / 10000) / 10) + t.lakh;
+  return '৳' + indian(n);
+}
+function priceOf(l) { return num(l.deal === 'rent' ? '৳' + indian(l.price) + t.perMonth : money(l.price)); }
+function budget(n, rent) { return num(rent ? '৳' + indian(n) + t.perMonth : money(n)); }
+function place(x) { return LANG === 'bn' ? (G.PLACE_BN[x] || x) : x; }
+function tx(o) { return o ? o[LANG] : ''; }
+function isCom(l) { return COMMERCIAL.indexOf(l.type) >= 0; }
+function specsOf(l) {
+  if (l.beds) return num(l.beds + t.bed + ' · ' + l.baths + t.bath + ' · ' + indian(l.sqft) + t.sqft);
+  return (l.land ? tx(l.land) + ' · ' : '') + num(indian(l.sqft)) + t.sqft;
+}
+function readSaved() { try { return JSON.parse(localStorage.getItem(SAVE_KEY) || '[]'); } catch (e) { return []; } }
+function writeSaved(a) { try { localStorage.setItem(SAVE_KEY, JSON.stringify(a)); } catch (e) {} }
+
+function readQuery() {
+  var p = new URLSearchParams(location.search), q = {};
+  for (var k in DEFAULTS) q[k] = DEFAULTS[k];
+  if (['any', 'buy', 'rent', 'commercial'].indexOf(p.get('deal')) >= 0) q.deal = p.get('deal');
+  if (p.get('type') && G.TYPE[p.get('type')]) q.type = p.get('type');
+  if (p.get('loc')) q.loc = LANG === 'bn' ? place(p.get('loc')) : p.get('loc');
+  if (/^\d+$/.test(p.get('min') || '')) q.min = p.get('min');
+  if (/^\d+$/.test(p.get('max') || '')) q.max = p.get('max');
+  if (/^[1-5]$/.test(p.get('beds') || '')) q.beds = p.get('beds');
+  if (p.get('verified') === '1') q.verified = true;
+  if (['newest', 'price-asc', 'price-desc', 'size'].indexOf(p.get('sort')) >= 0) q.sort = p.get('sort');
+  return q;
+}
+// The URL always stores English place names so links work in both languages.
+function placeEn(x) { for (var k in G.PLACE_BN) if (G.PLACE_BN[k] === x) return k; return x; }
+function writeQuery(q) {
+  var p = new URLSearchParams();
+  for (var k in DEFAULTS) {
+    var v = q[k];
+    if (v === DEFAULTS[k] || v === '') continue;
+    p.set(k, k === 'loc' ? placeEn(String(v).trim()) : (v === true ? '1' : v));
+  }
+  var s = p.toString();
+  try { history.replaceState(null, '', PAGE + (s ? '?' + s : '')); } catch (e) {}
+}
+function priceMode(q) { return q.deal === 'buy' ? 'sale' : q.deal === 'rent' ? 'rent' : ''; }
+function matches(l, q) {
+  // Buy / Rent mean homes and land, unless a commercial type was picked explicitly.
+  var comOk = q.type !== 'any';
+  if (q.deal === 'buy' && !(l.deal === 'sale' && (!isCom(l) || comOk))) return false;
+  if (q.deal === 'rent' && !(l.deal === 'rent' && (!isCom(l) || comOk))) return false;
+  if (q.deal === 'commercial' && !isCom(l)) return false;
+  if (q.type !== 'any' && l.type !== q.type) return false;
+  var loc = String(q.loc || '').trim().toLowerCase();
+  if (loc) {
+    var hay = [l.area, l.city, G.PLACE_BN[l.area] || '', G.PLACE_BN[l.city] || ''].join(' ').toLowerCase();
+    if (hay.indexOf(loc.replace(' r/a', '')) < 0) return false;
+  }
+  if (priceMode(q)) {
+    if (q.min && l.price < Number(q.min)) return false;
+    if (q.max && l.price > Number(q.max)) return false;
+  }
+  if (q.beds && !(l.beds >= Number(q.beds))) return false;
+  if (q.verified && !l.verified) return false;
+  return true;
+}
+function sorter(key) {
+  if (key === 'price-asc') return function (a, b) { return a.price - b.price; };
+  if (key === 'price-desc') return function (a, b) { return b.price - a.price; };
+  if (key === 'size') return function (a, b) { return b.sqft - a.sqft; };
+  return function (a, b) { return a.listed < b.listed ? 1 : a.listed > b.listed ? -1 : 0; };
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { q: readQuery(), saved: readSaved() };
+    document.title = t.docTitle;
+  }
+  setQ(patch) {
+    var q = {}, k;
+    for (k in this.state.q) q[k] = this.state.q[k];
+    for (k in patch) q[k] = patch[k];
+    if (patch.deal != null && patch.deal !== this.state.q.deal) { q.min = ''; q.max = ''; }
+    writeQuery(q);
+    this.setState({ q: q });
+  }
+  renderVals() {
+    var self = this, s = this.state, q = s.q;
+    var mode = priceMode(q);
+    var list = G.LISTINGS.filter(function (l) { return matches(l, q); }).sort(sorter(q.sort));
+    var on = function (k) { return function (e) { var p = {}; p[k] = e.target.type === 'checkbox' ? e.target.checked : e.target.value; self.setQ(p); }; };
+    var opts = function (steps, none, rent) { return [{ v: '', label: none }].concat(steps.map(function (n) { return { v: String(n), label: budget(n, rent) }; })); };
+    var steps = mode === 'rent' ? RENT_STEPS : SALE_STEPS;
+
+    var chips = [];
+    var chip = function (label, patch) { chips.push({ label: label, aria: fill(t.remove, { x: label }), go: function () { self.setQ(patch); } }); };
+    if (q.deal !== 'any') chip(q.deal === 'buy' ? t.buy : q.deal === 'rent' ? t.rent : t.com, { deal: 'any' });
+    if (q.type !== 'any') chip(tx(G.TYPE[q.type]), { type: 'any' });
+    if (String(q.loc).trim()) chip(String(q.loc).trim(), { loc: '' });
+    if (mode && q.min) chip(fill(t.from, { x: budget(Number(q.min), mode === 'rent') }), { min: '' });
+    if (mode && q.max) chip(fill(t.upTo, { x: budget(Number(q.max), mode === 'rent') }), { max: '' });
+    if (q.beds) chip(num(q.beds) + '+' + t.bed, { beds: '' });
+    if (q.verified) chip(t.idChecked, { verified: false });
+
+    var places = [];
+    G.LISTINGS.forEach(function (l) { [l.city, l.area].forEach(function (x) { var v = place(x); if (places.indexOf(v) < 0) places.push(v); }); });
+
+    return {
+      t: t, home: HOME, otherLang: LANG === 'bn' ? 'en' : 'bn', otherHref: OTHER + location.search, q: q,
+      navBuy: function () { self.setQ({ deal: 'buy', type: 'any' }); },
+      navRent: function () { self.setQ({ deal: 'rent', type: 'any' }); },
+      navLand: function () { self.setQ({ deal: 'any', type: 'Plot/Land' }); },
+      navCom: function () { self.setQ({ deal: 'commercial', type: 'any' }); },
+      noSubmit: function (e) { e.preventDefault(); },
+      deals: [['any', t.all], ['buy', t.buy], ['rent', t.rent], ['commercial', t.com]].map(function (d) { return { label: d[1], on: q.deal === d[0], go: function () { self.setQ({ deal: d[0] }); } }; }),
+      setVerified: on('verified'), setType: on('type'), setLoc: on('loc'), setMin: on('min'), setMax: on('max'), setBeds: on('beds'), setSort: on('sort'),
+      typeOpts: [{ v: 'any', label: t.anyType }].concat(Object.keys(G.TYPE).map(function (k) { return { v: k, label: tx(G.TYPE[k]) }; })),
+      places: places,
+      minLabel: mode === 'rent' ? t.minRent : t.minPrice, maxLabel: mode === 'rent' ? t.maxRent : t.maxPrice,
+      minOpts: opts(steps, t.noMin, mode === 'rent'), maxOpts: opts(steps, t.noMax, mode === 'rent'),
+      priceOff: !mode, priceNote: mode ? t.priceInfo : t.priceHint,
+      bedOpts: [{ v: '', label: t.anyBeds }].concat([1, 2, 3, 4, 5].map(function (n) { return { v: String(n), label: num(n) + '+' }; })),
+      sortOpts: [['newest', t.newest], ['price-asc', t.priceLow], ['price-desc', t.priceHigh], ['size', t.sizeBig]].map(function (o) { return { v: o[0], label: o[1] }; }),
+      countLabel: list.length === 1 ? t.count1 : fill(t.countN, { n: num(list.length) }),
+      chips: chips, hasChips: chips.length > 0,
+      clearAll: function () { var d = {}; for (var k in DEFAULTS) d[k] = DEFAULTS[k]; d.sort = self.state.q.sort; self.setQ(d); },
+      isEmpty: list.length === 0,
+      cards: list.map(function (l) {
+        var saved = s.saved.indexOf(l.id) >= 0, title = tx(l.title);
+        return {
+          tone: l.tone, photo: tx(l.photo), status: l.deal === 'rent' ? t.rentTag : t.sale, price: priceOf(l), title: title,
+          place: place(l.area) + ', ' + place(l.city), specs: specsOf(l), type: tx(G.TYPE[l.type]), verified: !!l.verified,
+          href: PROPERTY + '?id=' + l.id, saved: saved, saveCls: saved ? 'on' : '', heartFill: saved ? 'currentColor' : 'none',
+          saveLabel: fill(saved ? t.unsave : t.save, { x: title }),
+          toggle: function () {
+            var a = readSaved(), i = a.indexOf(l.id);
+            if (i >= 0) a.splice(i, 1); else a.push(l.id);
+            writeSaved(a); self.setState({ saved: a });
+          }
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>
